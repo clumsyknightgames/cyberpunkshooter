@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Weapon", menuName = "Player/Items/New Weapon")]
 public class WeaponTemplate : ScriptableObject
 {
-    public Damage WeaponDamageRange;
+    public DamageRange WeaponDamageRange;
     public float WeaponRateOfFire;
     public float weaponRange;
 
@@ -16,7 +16,7 @@ public class WeaponTemplate : ScriptableObject
 }
 
 [System.Serializable]
-public struct Damage
+public struct DamageRange
 {
     public float minDamage;
     public float maxDamage;

@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Unit
 {
-    private const float BASE_MOVEMENT_SPEED = 4f;
-    private float movSpeed;
-    private float curHealth, maxHealth;
-    private float curEnergy, maxEnergy;
-    private float defense;
-
     private float sensitivity;
     private Vector3 aimPoint;
 
@@ -24,17 +18,19 @@ public class PlayerController : MonoBehaviour
     private float fireTimer;
     private float weaponRange;
 
-    private Damage damageRange;
+    private DamageRange wepDamageRange;
 
     private Mesh wepModel;
     private Material wepMaterial;
 
+    public PlayerTemplate playerClass;
+
     void Start()
     {
+        initializePlayerClass();
+
         baseWeapon = transform.GetChild(0).gameObject;
         wepBarrel = baseWeapon.transform.GetChild(0).gameObject;
-
-        movSpeed = BASE_MOVEMENT_SPEED;
         equipWeapon();
 
         sensitivity = PlayerPrefs.GetFloat("SENSITIVITY", 8f);
@@ -68,11 +64,45 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
         }
     }
+    private void movement()
+    {
+        // Speed boost system, currently no stamina system, possibly add later, or not at all?
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            movSpeed = movSpeed + sprintModifier;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            movSpeed = movSpeed - sprintModifier;
+        }
+
+        float hSpeed = (Input.GetAxis("Horizontal") * movSpeed) * Time.deltaTime;
+        float vSpeed = (Input.GetAxis("Vertical") * movSpeed) * Time.deltaTime;
+
+        Vector3 newPos = transform.position;
+        newPos = new Vector3(newPos.x + hSpeed, newPos.y, newPos.z + vSpeed);
+
+        transform.position = newPos;
+    }
+
+    private void initializePlayerClass()
+    {
+        setMovSpeed(playerClass.movementSpeed);
+        setSprintModifier(playerClass.sprintSpeedModifier);
+
+        setMaxHealth(playerClass.maximumHealth);
+        setCurHealth(getMaxHealth());
+
+        setMaxEnergy(playerClass.maximumEnergy);
+        setCurEnergy(getMaxEnergy());
+
+        setDefense(playerClass.baseDefense);
+    }
 
     private void equipWeapon()
     {
         rateOfFire = equippedWeapon.WeaponRateOfFire;
-        damageRange = equippedWeapon.WeaponDamageRange;
+        wepDamageRange = equippedWeapon.WeaponDamageRange;
         weaponRange = equippedWeapon.weaponRange;
 
         wepModel = equippedWeapon.WeaponModel;
@@ -92,61 +122,4 @@ public class PlayerController : MonoBehaviour
         Vector3 targetPos = aimPoint;
         Debug.DrawLine(wepBarrel.transform.position, targetPos, Color.red, 10f);
     }
-
-    private void movement()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            movSpeed = BASE_MOVEMENT_SPEED*2;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            movSpeed = BASE_MOVEMENT_SPEED;
-        }
-        // input horizontal and vertical axis movment and translate location
-        float hSpeed = (Input.GetAxis("Horizontal") * movSpeed) * Time.deltaTime;
-        float vSpeed = (Input.GetAxis("Vertical") * movSpeed) * Time.deltaTime;
-
-        Vector3 newPos = transform.position;
-        newPos = new Vector3(newPos.x + hSpeed, newPos.y, newPos.z + vSpeed);
-
-        transform.position = newPos;
-    }
-
-    public float getCurEnergy()
-    {
-        return curEnergy;
-    }
-    public void modifyCurEnergy(int amount)
-    {
-        curEnergy += amount;
-        if (curEnergy > maxEnergy)
-            curEnergy = maxEnergy;
-    }
-
-    public bool damage(int amount)
-    {
-        bool isDead;
-
-        float dmg = amount - defense;
-        curHealth -= dmg;
-
-        isDead = curHealth <= 0;
-        return isDead;
-    }
-
-    public bool heal(int amount)
-    {
-        if (curHealth < maxHealth)
-        {
-            curHealth += amount;
-            if (curHealth > maxHealth)
-                curHealth = maxHealth;
-            return true; // was able to heal player
-        }
-        else
-            return false; // was unable to healer player
-    }
-
-
 }

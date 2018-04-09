@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippedWeapon: {fileID: 11400000, guid: b0dfe1d468a203343a65e173b9b49355, type: 2}
+  playerClass: {fileID: 11400000, guid: 5c2047cac14bead49b826ec6f1365af4, type: 2}
 --- !u!136 &136443934355674790
 CapsuleCollider:
   m_ObjectHideFlags: 1
