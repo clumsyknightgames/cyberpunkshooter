@@ -7,6 +7,8 @@ public class PlayerController : Unit
     private float sensitivity;
     private Vector3 aimPoint;
 
+    private const float useRange = 3f;
+
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
     // Weapon variables
@@ -50,6 +52,11 @@ public class PlayerController : Unit
                 fireTimer = 0;
             }
         }
+        
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            use();
+        }
     }
     void FixedUpdate()
     {
@@ -83,6 +90,13 @@ public class PlayerController : Unit
         newPos = new Vector3(newPos.x + hSpeed, newPos.y, newPos.z + vSpeed);
 
         transform.position = newPos;
+    }
+
+    private void use()
+    {
+        // cast a ray in front of the player, check if distance is less than or equal to useRange
+
+        // if it is, call the interact function on the object hit by the raycast
     }
 
     private void initializePlayerClass()

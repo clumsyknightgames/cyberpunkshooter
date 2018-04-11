@@ -2,43 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class LevelObject : MonoBehaviour
 {
-    protected float movSpeed, sprintModifier;
     protected int curHealth, maxHealth;
-    protected int curEnergy, maxEnergy;
-
     // percent damage is reduced by
     protected const int DEFENSE_CAP = 75;
     protected int defense;
 
-    protected bool isDead;
+    protected bool isDestroyed;
     protected bool isInteractable;
+    protected bool isDestructable;
 
+    // Use this for initialization
     void Start ()
     {
-        isDead = false;
-    }
+        isDestroyed = false;
+	}
 
     #region getters and setters
-    public float getMovSpeed()
-    {
-        return movSpeed;
-    }
-    public void setMovSpeed(float value)
-    {
-        movSpeed = value;
-    }
-
-    public float getSprintModifier()
-    {
-        return sprintModifier;
-    }
-    public void setSprintModifier(float value)
-    {
-        sprintModifier = value;
-    }
-
     public int getCurHealth()
     {
         return curHealth;
@@ -51,7 +32,7 @@ public class Unit : MonoBehaviour
         else if (curHealth < 0)
         {
             curHealth = 0;
-            isDead = true;
+            isDestroyed = true;
         }
     }
     public int getMaxHealth()
@@ -62,26 +43,6 @@ public class Unit : MonoBehaviour
     {
         maxHealth = value;
     }
-
-    public int getCurEnergy()
-    {
-        return curEnergy;
-    }
-    public void setCurEnergy(int value)
-    {
-        curEnergy = value;
-        if (curEnergy > maxEnergy)
-            curEnergy = maxEnergy;
-    }
-    public int getMaxEnergy()
-    {
-        return maxEnergy;
-    }
-    public void setMaxEnergy(int value)
-    {
-        maxEnergy = value;
-    }
-
     public int getDefense()
     {
         return defense;
@@ -95,33 +56,25 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
-    // Utility functions
     public bool damage(int value)
     {
-        float dmg = value * (defense/100);
-        setCurHealth(curHealth - Mathf.RoundToInt(dmg));
-
-        return isDead;
-    }
-
-    public bool heal(int value)
-    {
-        if (curHealth < maxHealth && curHealth > 0)
+        if (isDestructable)
         {
-            setCurHealth(curHealth + value);
-            return true; // was able to heal player
+            float dmg = value * (defense / 100);
+            setCurHealth(curHealth - Mathf.RoundToInt(dmg));
+
+            return isDestroyed;
         }
         else
-            return false; // was unable to healer player
+            return false;
     }
-
     public bool interactable()
     {
         return isInteractable;
     }
     public bool interact()
     {
-        if (isInteractable)
+        if(isInteractable)
         {
             // interactable code here
             return true; // we were able to interact
