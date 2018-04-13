@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4167682772741860}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33749456290999176}
   - component: {fileID: 65517109943508170}
   - component: {fileID: 23449140820771376}
+  - component: {fileID: 114837184541087228}
   m_Layer: 0
   m_Name: weapon
   m_TagString: Untagged
@@ -71,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383542670059958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.21, y: 5.62, z: -4.14}
+  m_LocalPosition: {x: 0.21, y: 4.34, z: -4.14}
   m_LocalScale: {x: 1, y: 2.75, z: 1}
   m_Children:
   - {fileID: 4809398280292386}
@@ -225,8 +226,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f795630f9f0963429133ba5bbfe340a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedWeapon: {fileID: 11400000, guid: b0dfe1d468a203343a65e173b9b49355, type: 2}
+  weaponTemplate: {fileID: 11400000, guid: b0dfe1d468a203343a65e173b9b49355, type: 2}
   playerClass: {fileID: 11400000, guid: 5c2047cac14bead49b826ec6f1365af4, type: 2}
+--- !u!114 &114837184541087228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1326397376318700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af6bf5822fb1324c8b468e6473840fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136443934355674790
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -9,6 +9,14 @@ public class Weapon : MonoBehaviour {
     protected int magAmmo, numMags;
     protected int magCapacity, maxMags;
 
+    private GameObject muzzle;
+
+    private float rateOfFire;
+    private float fireTimer;
+    private float weaponRange;
+
+    private DamageRange wepDamageRange;
+
     #region getters and setters
     public int getMagAmmo()
     {
@@ -34,6 +42,17 @@ public class Weapon : MonoBehaviour {
             numMags = value;
     }
     #endregion
+    private void Start()
+    {
+        muzzle = transform.GetChild(0).gameObject;
+        fireTimer = 0;
+
+        //TESTING VARS
+        magAmmo = 5;
+        magCapacity = 60;
+        numMags = 1;
+        maxMags = 30;
+    }
 
     public bool reload()
     {
@@ -46,8 +65,55 @@ public class Weapon : MonoBehaviour {
         else
             return false; // no ammo, unable to reload
     }
-    public void fire()
+
+    public void fire(Vector3 aimPoint)
     {
-        // fire gun logic
+        fireTimer += Time.deltaTime;
+        if (fireTimer >= rateOfFire)
+        {
+            if(magAmmo > 0)
+            {
+                setMagAmmo(magAmmo - 1);
+                Vector3 pos = muzzle.transform.forward*weaponRange;// * weaponRange;
+                RaycastHit hit;
+                pos.y += aimPoint.y;
+
+                Debug.DrawRay(muzzle.transform.position, pos, Color.green, 10f); // debug visualization of hit
+                if(Physics.Raycast(muzzle.transform.position, pos, out hit))
+                {
+                    Debug.Log("HIT: " + hit.collider.gameObject);
+                }
+            }
+            else
+            {
+                if (!reload()) // if the player is unable to reload
+                    Debug.Log("NO MAGS");
+
+            }
+            fireTimer = 0;
+        }
+    }
+
+    public void equipWeapon(WeaponTemplate wep)
+    {
+        rateOfFire = wep.WeaponRateOfFire;
+        wepDamageRange = wep.WeaponDamageRange;
+        weaponRange = wep.weaponRange;
+
+        gameObject.GetComponent<MeshFilter>().mesh = wep.WeaponModel;
+        gameObject.GetComponent<Renderer>().material = wep.weaponMaterial;
+    }
+
+    public bool pickupMagazine(int amount)
+    {
+        if(numMags >= maxMags)
+        {
+            return false; // player has maximum amount of magazines
+        }
+        else
+        {
+            setNumMags(numMags += amount);
+            return true;
+        }
     }
 }

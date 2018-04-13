@@ -12,18 +12,9 @@ public class PlayerController : Unit
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
     // Weapon variables
+    public WeaponTemplate weaponTemplate;
     private GameObject baseWeapon;
-    private GameObject wepBarrel;
-    public WeaponTemplate equippedWeapon;
-
-    private float rateOfFire;
-    private float fireTimer;
-    private float weaponRange;
-
-    private DamageRange wepDamageRange;
-
-    private Mesh wepModel;
-    private Material wepMaterial;
+    private Weapon weapon;
 
     public PlayerTemplate playerClass;
 
@@ -32,11 +23,10 @@ public class PlayerController : Unit
         initializePlayerClass();
 
         baseWeapon = transform.GetChild(0).gameObject;
-        wepBarrel = baseWeapon.transform.GetChild(0).gameObject;
-        equipWeapon();
+        weapon = baseWeapon.GetComponent<Weapon>();
+        swapWeapon();
 
         sensitivity = PlayerPrefs.GetFloat("SENSITIVITY", 8f);
-        fireTimer = 0;
     }
 
     void Update()
@@ -45,12 +35,7 @@ public class PlayerController : Unit
 
         if(Input.GetMouseButton(0))
         {
-            fireTimer += Time.deltaTime;
-            if(fireTimer >= rateOfFire)
-            {
-                fireWeapon();
-                fireTimer = 0;
-            }
+            weapon.fire(aimPoint);
         }
         
         if(Input.GetKeyDown(KeyCode.E))
@@ -62,13 +47,18 @@ public class PlayerController : Unit
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
-            aimPoint = hit.point;
+            aimPoint.x = hit.point.x;
+            aimPoint.z = hit.point.z;
             Quaternion targetRotation = Quaternion.LookRotation(aimPoint - transform.position);
             targetRotation.x = 0;
             targetRotation.z = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
+            if(hit.transform.gameObject.layer == LayerMask.NameToLayer("ground"))
+            {
+                aimPoint.y = hit.point.y;
+            }
         }
     }
     private void movement()
@@ -113,27 +103,13 @@ public class PlayerController : Unit
         setDefense(playerClass.baseDefense);
     }
 
-    private void equipWeapon()
-    {
-        rateOfFire = equippedWeapon.WeaponRateOfFire;
-        wepDamageRange = equippedWeapon.WeaponDamageRange;
-        weaponRange = equippedWeapon.weaponRange;
-
-        wepModel = equippedWeapon.WeaponModel;
-        wepMaterial = equippedWeapon.weaponMaterial;
-
-
-        baseWeapon.GetComponent<MeshFilter>().mesh = wepModel;
-        baseWeapon.GetComponent<Renderer>().material = wepMaterial;
-    }
     private void swapWeapon(WeaponTemplate newWeapon)
     {
-        equippedWeapon = newWeapon;
-        equipWeapon();
+        weaponTemplate = newWeapon;
+        weapon.equipWeapon(newWeapon);
     }
-    private void fireWeapon()
+    private void swapWeapon()
     {
-        Vector3 targetPos = aimPoint;
-        Debug.DrawLine(wepBarrel.transform.position, targetPos, Color.red, 10f);
+        weapon.equipWeapon(weaponTemplate);
     }
 }

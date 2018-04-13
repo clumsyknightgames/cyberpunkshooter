@@ -15,6 +15,6 @@ MonoBehaviour:
     minDamage: 0
     maxDamage: 0
   WeaponRateOfFire: 0.2
-  weaponRange: 1
+  weaponRange: 20
   WeaponModel: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   weaponMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
