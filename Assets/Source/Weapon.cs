@@ -17,6 +17,11 @@ public class Weapon : MonoBehaviour {
 
     private DamageRange wepDamageRange;
 
+
+    // might switch to arrays instead? undecoded
+    public List<AudioSource> shootSounds = new List<AudioSource>();
+    public List<AudioSource> impactSounds = new List<AudioSource>();
+
     #region getters and setters
     public int getMagAmmo()
     {
@@ -74,12 +79,12 @@ public class Weapon : MonoBehaviour {
             if(magAmmo > 0)
             {
                 setMagAmmo(magAmmo - 1);
-                Vector3 pos = muzzle.transform.forward*weaponRange;// * weaponRange;
+                Vector3 pos = muzzle.transform.forward*weaponRange;
                 RaycastHit hit;
                 pos.y += aimPoint.y;
 
                 Debug.DrawRay(muzzle.transform.position, pos, Color.green, 10f); // debug visualization of hit
-                if(Physics.Raycast(muzzle.transform.position, pos, out hit))
+                if(Physics.Raycast(muzzle.transform.position, pos, out hit, weaponRange))
                 {
                     Debug.Log("HIT: " + hit.collider.gameObject);
                 }
@@ -96,12 +101,21 @@ public class Weapon : MonoBehaviour {
 
     public void equipWeapon(WeaponTemplate wep)
     {
-        rateOfFire = wep.WeaponRateOfFire;
-        wepDamageRange = wep.WeaponDamageRange;
+        rateOfFire = wep.weaponRateOfFire;
+        wepDamageRange = wep.weaponDamageRange;
         weaponRange = wep.weaponRange;
 
-        gameObject.GetComponent<MeshFilter>().mesh = wep.WeaponModel;
+        gameObject.GetComponent<MeshFilter>().mesh = wep.weaponModel;
         gameObject.GetComponent<Renderer>().material = wep.weaponMaterial;
+
+        foreach(AudioSource s in wep.weaponShootSounds)
+        {
+            shootSounds.Add(s);
+        }
+        foreach (AudioSource s in wep.weaponImpactSounds)
+        {
+            impactSounds.Add(s);
+        }
     }
 
     public bool pickupMagazine(int amount)

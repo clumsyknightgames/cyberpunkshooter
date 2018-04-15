@@ -7,7 +7,9 @@ public class PlayerController : Unit
     private float sensitivity;
     private Vector3 aimPoint;
 
-    private const float useRange = 3f;
+    private const float USE_RANGE = 3f;
+    private const float AIM_OFFSET = 5f;
+    private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
@@ -47,6 +49,7 @@ public class PlayerController : Unit
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
@@ -57,7 +60,12 @@ public class PlayerController : Unit
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
             if(hit.transform.gameObject.layer == LayerMask.NameToLayer("ground"))
             {
-                aimPoint.y = hit.point.y;
+                if ((hit.point.y) > baseWeapon.transform.GetChild(0).transform.position.y) // are we aiming above where the player currently is
+                    aimPoint.y = hit.point.y + AIM_OFFSET;
+                else if ((hit.point.y) < baseWeapon.transform.GetChild(0).transform.position.y) // are we aiming below where the player currently is
+                    aimPoint.y = hit.point.y - AIM_OFFSET;
+                else
+                    aimPoint.y = baseWeapon.transform.GetChild(0).transform.position.y;
             }
         }
     }
