@@ -8,7 +8,7 @@ public class PlayerController : Unit
     private Vector3 aimPoint;
 
     private const float USE_RANGE = 3f;
-    private const float AIM_OFFSET = 5f;
+    private const float AIM_OFFSET = 1f;
     private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
@@ -53,20 +53,38 @@ public class PlayerController : Unit
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.z = hit.point.z;
-            Quaternion targetRotation = Quaternion.LookRotation(aimPoint - transform.position);
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
-            if(hit.transform.gameObject.layer == LayerMask.NameToLayer("ground"))
-            {
+			aimPoint.y = hit.point.y;
+			aimPoint.z = hit.point.z;
+
+			// Yellow line for input-based aim before any corrections
+			Debug.DrawLine(baseWeapon.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
+
+			if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > baseWeapon.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - baseWeapon.transform.GetChild(0).transform.position.y, 0, 1);
+            
+			/* old code, only for reference until aiming is working completely as intended.
+			{
                 if ((hit.point.y) > baseWeapon.transform.GetChild(0).transform.position.y) // are we aiming above where the player currently is
                     aimPoint.y = hit.point.y + AIM_OFFSET;
                 else if ((hit.point.y) < baseWeapon.transform.GetChild(0).transform.position.y) // are we aiming below where the player currently is
                     aimPoint.y = hit.point.y - AIM_OFFSET;
                 else
                     aimPoint.y = baseWeapon.transform.GetChild(0).transform.position.y;
-            }
+			}*/
+
+			// Rotate player towards new aim point
+            Quaternion targetRotation = Quaternion.LookRotation(aimPoint - transform.position);
+            targetRotation.x = 0;
+            targetRotation.z = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
+
+			// weapon rotation independent of player rotation 
+			baseWeapon.transform.rotation = Quaternion.LookRotation(aimPoint - baseWeapon.transform.position);
+
+			// Show where the gun is aiming with a cyan line
+			Debug.DrawRay(baseWeapon.transform.GetChild(0).transform.position, baseWeapon.transform.forward * 100, Color.cyan, 0);
+
+			// Show where we're aiming with the offset included with a pink line
+			Debug.DrawLine(baseWeapon.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
         }
     }
     private void movement()

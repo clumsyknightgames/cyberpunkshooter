@@ -11,10 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0afedd48da4f2149a6abec4b5c03144, type: 3}
   m_Name: Test Weapon
   m_EditorClassIdentifier: 
-  WeaponDamageRange:
+  weaponDamageRange:
     minDamage: 0
     maxDamage: 0
-  WeaponRateOfFire: 0.2
+  weaponRateOfFire: 0.1
   weaponRange: 60
-  WeaponModel: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  weaponModel: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   weaponMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  weaponShootSounds: []
+  weaponImpactSounds: []

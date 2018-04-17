@@ -83,9 +83,11 @@ public class Weapon : MonoBehaviour {
                 RaycastHit hit;
                 pos.y += aimPoint.y;
 
-                Debug.DrawRay(muzzle.transform.position, pos, Color.green, 10f); // debug visualization of hit
+                Debug.DrawRay(muzzle.transform.position, pos, Color.green, 10); // Show shot in green
                 if(Physics.Raycast(muzzle.transform.position, pos, out hit, weaponRange))
                 {
+					// Show shot travel from muzzle to impact as red line
+					Debug.DrawLine(muzzle.transform.position, hit.point, Color.red, 10);
                     Debug.Log("HIT: " + hit.collider.gameObject);
                 }
             }
