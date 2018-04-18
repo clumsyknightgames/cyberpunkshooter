@@ -79,12 +79,10 @@ public class Weapon : MonoBehaviour {
             if(magAmmo > 0)
             {
                 setMagAmmo(magAmmo - 1);
-                Vector3 pos = muzzle.transform.forward*weaponRange;
                 RaycastHit hit;
-                pos.y += aimPoint.y;
 
-                Debug.DrawRay(muzzle.transform.position, pos, Color.green, 10); // Show shot in green
-                if(Physics.Raycast(muzzle.transform.position, pos, out hit, weaponRange))
+                Debug.DrawRay(muzzle.transform.position, muzzle.transform.forward * 100, Color.green, 10); // Show shot in green
+                if(Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out hit, weaponRange))
                 {
 					// Show shot travel from muzzle to impact as red line
 					Debug.DrawLine(muzzle.transform.position, hit.point, Color.red, 10);

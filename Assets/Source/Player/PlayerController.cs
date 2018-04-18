@@ -81,7 +81,7 @@ public class PlayerController : Unit
 			baseWeapon.transform.rotation = Quaternion.LookRotation(aimPoint - baseWeapon.transform.position);
 
 			// Show where the gun is aiming with a cyan line
-			Debug.DrawRay(baseWeapon.transform.GetChild(0).transform.position, baseWeapon.transform.forward * 100, Color.cyan, 0);
+			Debug.DrawRay(baseWeapon.transform.GetChild(0).transform.position, baseWeapon.transform.GetChild(0).transform.forward * 100, Color.cyan, 0);
 
 			// Show where we're aiming with the offset included with a pink line
 			Debug.DrawLine(baseWeapon.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);

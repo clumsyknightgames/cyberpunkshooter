@@ -339,6 +339,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &782412593 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1326397376318700, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 1681984801}
+--- !u!64 &782412597
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 782412593}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 4f10bf6107b632a41943de1b0526e7ff, type: 3}
 --- !u!1 &905719441
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,11 +912,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4809398280292386, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.175
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4809398280292386, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalScale.z
-      value: 1.722016
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalRotation.x
@@ -919,8 +938,44 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    m_RemovedComponents: []
+      objectReference: {fileID: 4300000, guid: 4f10bf6107b632a41943de1b0526e7ff, type: 3}
+    - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.50040025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.08999926
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33412104814301450, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: ea2d618b35423f04dabd924f7d69ae85, type: 3}
+    - target: {fileID: 4809398280292386, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146243189190248, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65517109943508170, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 136443934355674790, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 65517109943508170, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1832615288 stripped
