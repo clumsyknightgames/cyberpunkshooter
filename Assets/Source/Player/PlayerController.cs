@@ -35,12 +35,12 @@ public class PlayerController : Unit
     {
         movement();
 
-        if(Input.GetMouseButton(0))
+        if(Input.GetButton("Fire"))
         {
-            weapon.fire(aimPoint);
+            weapon.fire();
         }
         
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetButton("Use"))
         {
             use();
         }
@@ -89,18 +89,15 @@ public class PlayerController : Unit
     }
     private void movement()
     {
+        float finalMovSpeed = movSpeed;
         // Speed boost system, currently no stamina system, possibly add later, or not at all?
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetButton("Sprint"))
         {
-            movSpeed = movSpeed + sprintModifier;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            movSpeed = movSpeed - sprintModifier;
+            finalMovSpeed = movSpeed + sprintModifier;
         }
 
-        float hSpeed = (Input.GetAxis("Horizontal") * movSpeed) * Time.deltaTime;
-        float vSpeed = (Input.GetAxis("Vertical") * movSpeed) * Time.deltaTime;
+        float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
+        float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
 
         Vector3 newPos = transform.position;
         newPos = new Vector3(newPos.x + hSpeed, newPos.y, newPos.z + vSpeed);

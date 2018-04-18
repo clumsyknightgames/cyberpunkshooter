@@ -50,7 +50,6 @@ public class Weapon : MonoBehaviour {
     private void Start()
     {
         muzzle = transform.GetChild(0).gameObject;
-        fireTimer = 0;
 
         //TESTING VARS
         magAmmo = 5;
@@ -71,11 +70,12 @@ public class Weapon : MonoBehaviour {
             return false; // no ammo, unable to reload
     }
 
-    public void fire(Vector3 aimPoint)
+    public void fire()
     {
         fireTimer += Time.deltaTime;
         if (fireTimer >= rateOfFire)
         {
+            //Debug.Log("Ready to fire after " + fireTimer + "s.");
             if(magAmmo > 0)
             {
                 setMagAmmo(magAmmo - 1);
@@ -102,7 +102,7 @@ public class Weapon : MonoBehaviour {
     public void equipWeapon(WeaponTemplate wep)
     {
         rateOfFire = wep.weaponRateOfFire;
-        wepDamageRange = wep.weaponDamageRange;
+        // wepDamageRange = wep.weaponDamageRange;
         weaponRange = wep.weaponRange;
 
         gameObject.GetComponent<MeshFilter>().mesh = wep.weaponModel;

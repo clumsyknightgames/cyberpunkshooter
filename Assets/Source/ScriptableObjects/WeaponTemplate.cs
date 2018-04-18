@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Weapon", menuName = "Player/Items/New Weapon")]
 public class WeaponTemplate : ScriptableObject
 {
-    public DamageRange weaponDamageRange;
+    public float damageMultiplier;
     public float weaponRateOfFire;
     public float weaponRange;
+    public float reloadTime;
+    public magazineTemplate[] magazineTypes;
 
     [Space(10)]
     [Header("Weapon Artwork")]
@@ -18,11 +20,4 @@ public class WeaponTemplate : ScriptableObject
     [Header("Weapon Sounds")]
     public AudioSource[] weaponShootSounds;
     public AudioSource[] weaponImpactSounds;
-}
-
-[System.Serializable]
-public struct DamageRange
-{
-    public float minDamage;
-    public float maxDamage;
 }

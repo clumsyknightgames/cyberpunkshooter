@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 30Rnd_556x45_STANAG
+  m_EditorClassIdentifier: Assembly-CSharp::magazineTemplate
+  ammoType: {fileID: 11400000, guid: d5ce2038229744348a77a18a18eeeb53, type: 2}
+  ammoCount: 30
+  reloadMultiplier: 1
+  magazineModel: {fileID: 0}
+  magazineMaterial: {fileID: 0}
+  weaponShootSounds: []
+  weaponImpactSounds: []
