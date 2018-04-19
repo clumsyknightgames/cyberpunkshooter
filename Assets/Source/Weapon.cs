@@ -6,23 +6,30 @@ public class Weapon : MonoBehaviour {
 
     // store 'sockets' for Muzzle, Barrel, trigger and ejection area
 
-    protected int magAmmo, numMags;
-    protected int magCapacity, maxMags;
+    protected int currentAmmo;
 
     private GameObject muzzle;
+    private GameObject ejectionPort;
+    private GameObject magwell;
+    public GameObject Brass;
+
+    private PlayerController player;
+
+    private PlayerTemplate playerData;
+    private WeaponTemplate weaponData;
+    private ammoTemplate ammoData;
+
+    public List<magazineTemplate> MagazineTypes;
 
     private float rateOfFire;
     private float fireTimer;
     private float weaponRange;
 
-    private DamageRange wepDamageRange;
-
-
     // might switch to arrays instead? undecoded
     public List<AudioSource> shootSounds = new List<AudioSource>();
     public List<AudioSource> impactSounds = new List<AudioSource>();
 
-    #region getters and setters
+    /*#region getters and setters
     public int getMagAmmo()
     {
         return magAmmo;
@@ -46,54 +53,106 @@ public class Weapon : MonoBehaviour {
         else
             numMags = value;
     }
-    #endregion
+    #endregion*/
     private void Start()
     {
         muzzle = transform.GetChild(0).gameObject;
-
-        //TESTING VARS
-        magAmmo = 5;
-        magCapacity = 60;
-        numMags = 1;
-        maxMags = 30;
+        ejectionPort = transform.GetChild(1).gameObject;
+        magwell = transform.GetChild(1).gameObject;
+        player = transform.parent.gameObject.GetComponent<PlayerController>();
+        currentAmmo = 0;
     }
 
-    public bool reload()
+    public void Reload()
     {
-        if (numMags > 0)
+        if (CanReload())
         {
-            setNumMags(numMags-1); // subtract 1 mag
-            setMagAmmo(magCapacity); // reset current mag ammo to mag capacity. partial mags discarded (maybe keep in future? undecided)
-            return true; // was able to reload
+            magazineTemplate MagToReload = GetFirstMagType();
+            if (player.Magazines[MagToReload] > 0)
+            {
+                // Insert reload timer here
+                currentAmmo = MagToReload.ammoCount;
+                ammoData = MagToReload.ammoType;
+                player.Magazines[MagToReload]--;
+                Debug.Log("Reloaded weapon");
+            }
         }
-        else
-            return false; // no ammo, unable to reload
     }
 
-    public void fire()
+    public magazineTemplate GetFirstMagType()
+    {
+        foreach (magazineTemplate magazineType in MagazineTypes)
+        {
+            if (player.Magazines.ContainsKey(magazineType))
+            {
+                if (player.Magazines[magazineType] > 0)
+                {
+                    return magazineType;
+                }
+            }
+        }
+        return null;
+    }
+
+    public bool CanReload()
+    {
+        if (GetFirstMagType() != null)
+        {
+            return true;
+        }
+        Debug.Log("No magazines!");
+        return false;
+    }
+
+    public void Fire()
     {
         fireTimer += Time.deltaTime;
         if (fireTimer >= rateOfFire)
         {
             //Debug.Log("Ready to fire after " + fireTimer + "s.");
-            if(magAmmo > 0)
+            if (currentAmmo > 0)
             {
-                setMagAmmo(magAmmo - 1);
+                currentAmmo--;
                 RaycastHit hit;
 
                 Debug.DrawRay(muzzle.transform.position, muzzle.transform.forward * 100, Color.green, 10); // Show shot in green
-                if(Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out hit, weaponRange))
+                if (Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out hit, weaponRange))
                 {
-					// Show shot travel from muzzle to impact as red line
-					Debug.DrawLine(muzzle.transform.position, hit.point, Color.red, 10);
+                    // Show shot travel from muzzle to impact as red line
+                    Debug.DrawLine(muzzle.transform.position, hit.point, Color.red, 10);
                     Debug.Log("HIT: " + hit.collider.gameObject);
                 }
+                Debug.Log("Pew.");
+
+                // Brass ejection
+                // Create new instance, set parameters according to currently loaded ammo
+                GameObject newBrass = Instantiate(Brass);
+                newBrass.GetComponent<MeshFilter>().mesh = ammoData.brassModel;
+                newBrass.GetComponent<MeshRenderer>().material = ammoData.brassMaterial;
+                newBrass.GetComponent<MeshCollider>().sharedMesh = ammoData.brassModel;
+
+                // Move brass to ejection location and align with barrel
+                newBrass.transform.position = ejectionPort.transform.position;
+                newBrass.transform.rotation = muzzle.transform.rotation;
+
+                // Set ejection force with slight randomisation
+                Vector3 ejectionVector = new Vector3();
+                ejectionVector.x = Random.Range(-1f, 1f);
+                ejectionVector.y = Random.Range(-0.5f, 0.5f);
+                ejectionVector.z = 5 + Random.Range(-0.5f, 0.5f);
+
+                // Set ejection torque with slight randomisation
+                Vector3 ejectionTorque = new Vector3(Random.Range(-3f, -5f), Random.Range(-3f, -5f), Random.Range(3f, 5f));
+
+                // Apply force and torque
+                newBrass.GetComponent<Rigidbody>().velocity = ejectionPort.transform.TransformDirection(ejectionVector);
+                newBrass.GetComponent<Rigidbody>().AddTorque(ejectionTorque);
+                
+                Debug.DrawRay(ejectionPort.transform.position, ejectionPort.transform.TransformDirection(ejectionVector), Color.blue, 0.1f);
             }
             else
             {
-                if (!reload()) // if the player is unable to reload
-                    Debug.Log("NO MAGS");
-
+                Debug.Log("Magazine empty");
             }
             fireTimer = 0;
         }
@@ -101,33 +160,22 @@ public class Weapon : MonoBehaviour {
 
     public void equipWeapon(WeaponTemplate wep)
     {
-        rateOfFire = wep.weaponRateOfFire;
+        weaponData = wep;
+        MagazineTypes = weaponData.magazineTypes;
+        rateOfFire = weaponData.weaponRateOfFire;
         // wepDamageRange = wep.weaponDamageRange;
-        weaponRange = wep.weaponRange;
+        weaponRange = weaponData.weaponRange;
 
-        gameObject.GetComponent<MeshFilter>().mesh = wep.weaponModel;
-        gameObject.GetComponent<Renderer>().material = wep.weaponMaterial;
+        gameObject.GetComponent<MeshFilter>().mesh = weaponData.weaponModel;
+        gameObject.GetComponent<Renderer>().material = weaponData.weaponMaterial;
 
-        foreach(AudioSource s in wep.weaponShootSounds)
+        /*foreach(AudioSource s in wep.weaponShootSounds)
         {
             shootSounds.Add(s);
         }
         foreach (AudioSource s in wep.weaponImpactSounds)
         {
             impactSounds.Add(s);
-        }
-    }
-
-    public bool pickupMagazine(int amount)
-    {
-        if(numMags >= maxMags)
-        {
-            return false; // player has maximum amount of magazines
-        }
-        else
-        {
-            setNumMags(numMags += amount);
-            return true;
-        }
+        }*/
     }
 }

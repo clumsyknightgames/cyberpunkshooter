@@ -9,7 +9,7 @@ public class WeaponTemplate : ScriptableObject
     public float weaponRateOfFire;
     public float weaponRange;
     public float reloadTime;
-    public magazineTemplate[] magazineTypes;
+    public List<magazineTemplate> magazineTypes;
 
     [Space(10)]
     [Header("Weapon Artwork")]

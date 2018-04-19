@@ -16,6 +16,5 @@ public class magazineTemplate : ScriptableObject
 
     [Space(10)]
     [Header("Sounds")]
-    public AudioSource[] weaponShootSounds;
-    public AudioSource[] weaponImpactSounds;
+    public AudioSource[] magazineReloadSounds;
 }

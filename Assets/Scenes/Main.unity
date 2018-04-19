@@ -197,6 +197,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &562725108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1213198257048168, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 562725109}
+  m_Layer: 0
+  m_Name: Magwell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &562725109
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562725108}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.06699985, y: -0.05, z: 0.174}
+  m_LocalScale: {x: 5.6840687, y: 3.277, z: 0.58071}
+  m_Children: []
+  m_Father: {fileID: 782412594}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &587655907
 Prefab:
   m_ObjectHideFlags: 0
@@ -342,6 +372,11 @@ Transform:
 --- !u!1 &782412593 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1326397376318700, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 1681984801}
+--- !u!4 &782412594 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4809398280292386, guid: ba0f4a5c2368a6341b58318166fe4484,
     type: 2}
   m_PrefabInternal: {fileID: 1681984801}
 --- !u!64 &782412597
@@ -671,6 +706,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1495257340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1213198257048168, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1495257341}
+  m_Layer: 0
+  m_Name: EjectionPort
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495257341
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1495257340}
+  m_LocalRotation: {x: -0.3535534, y: 0.61237246, z: 0.35355344, w: 0.6123724}
+  m_LocalPosition: {x: 0.06699985, y: 0.041000158, z: 0.08700085}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 782412594}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -60, y: 90.00001, z: 0}
 --- !u!1 &1559704128
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +913,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114582527596025540, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: Weapons.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4146243189190248, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.71
@@ -941,7 +1011,7 @@ Prefab:
       objectReference: {fileID: 4300000, guid: 4f10bf6107b632a41943de1b0526e7ff, type: 3}
     - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.50040025
+      value: 0.846
       objectReference: {fileID: 0}
     - target: {fileID: 4167682772741860, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalPosition.x
@@ -974,6 +1044,18 @@ Prefab:
       propertyPath: m_Height
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114582527596025540, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: Weapons.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: b0dfe1d468a203343a65e173b9b49355,
+        type: 2}
+    - target: {fileID: 114837184541087228, guid: ba0f4a5c2368a6341b58318166fe4484,
+        type: 2}
+      propertyPath: Brass
+      value: 
+      objectReference: {fileID: 1454332907540856, guid: 34e49ce028f0480418b9b935e188eb07,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 65517109943508170, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}

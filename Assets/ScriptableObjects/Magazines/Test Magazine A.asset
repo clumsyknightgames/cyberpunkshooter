@@ -9,12 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: 30Rnd_556x45_STANAG
+  m_Name: Test Magazine A
   m_EditorClassIdentifier: Assembly-CSharp::magazineTemplate
-  ammoType: {fileID: 11400000, guid: d5ce2038229744348a77a18a18eeeb53, type: 2}
+  ammoType: {fileID: 11400000, guid: a6cdf2d4301a1954480a0fa86935c93d, type: 2}
   ammoCount: 30
   reloadMultiplier: 1
-  magazineModel: {fileID: 0}
-  magazineMaterial: {fileID: 0}
-  weaponShootSounds: []
-  weaponImpactSounds: []
+  magazineModel: {fileID: 4300000, guid: 59fa4a055e243c24195c4bf89db4224d, type: 3}
+  magazineMaterial: {fileID: 2100000, guid: 59fa4a055e243c24195c4bf89db4224d, type: 3}
+  magazineReloadSounds: []

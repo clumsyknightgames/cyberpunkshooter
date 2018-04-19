@@ -14,35 +14,71 @@ public class PlayerController : Unit
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
     // Weapon variables
-    public WeaponTemplate weaponTemplate;
-    private GameObject baseWeapon;
-    private Weapon weapon;
+
+    public List<WeaponTemplate> Weapons;
+    public Dictionary<magazineTemplate, int> Magazines;
+
+    private GameObject weaponObject;
+    private Weapon weaponController;
 
     public PlayerTemplate playerClass;
+
+    private Dictionary<string, bool> handledKeys;
 
     void Start()
     {
         initializePlayerClass();
 
-        baseWeapon = transform.GetChild(0).gameObject;
-        weapon = baseWeapon.GetComponent<Weapon>();
-        swapWeapon();
+        handledKeys = new Dictionary<string, bool>();
+
+        weaponObject = transform.GetChild(0).gameObject;
+        weaponController = weaponObject.GetComponent<Weapon>();
+
+        Magazines = new Dictionary<magazineTemplate, int>();
+
+        foreach (MagazineSlot pair in playerClass.magazines)
+        {
+            Magazines.Add(pair.MagazineType, pair.MagazineCount);
+        }
+        Weapons = playerClass.weapons;
 
         sensitivity = PlayerPrefs.GetFloat("SENSITIVITY", 8f);
+
+        EquipWeapon();
     }
 
     void Update()
     {
         movement();
 
-        if(Input.GetButton("Fire"))
+        if (Input.GetButton("Fire") /*&& !handledKeys["Fire"]*/)
         {
-            weapon.fire();
+            weaponController.Fire();
+            //handledKeys["Fire"] = true;
         }
-        
-        if(Input.GetButton("Use"))
+        /*else if (!Input.GetButton("Fire"))
+        {
+            handledKeys["Fire"] = false;
+        }*/
+
+        if (Input.GetButton("Use") && !handledKeys["Use"])
         {
             use();
+            handledKeys["Use"] = true;
+        }
+        else if (!Input.GetButton("Use"))
+        {
+            handledKeys["Use"] = false;
+        }
+
+        if (Input.GetButton("Reload") && !handledKeys["Reload"])
+        {
+            weaponController.Reload();
+            handledKeys["Reload"] = true;
+        }
+        else if (!Input.GetButton("Reload"))
+        {
+            handledKeys["Reload"] = false;
         }
     }
     void FixedUpdate()
@@ -53,15 +89,15 @@ public class PlayerController : Unit
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-			aimPoint.y = hit.point.y;
-			aimPoint.z = hit.point.z;
+            aimPoint.y = hit.point.y;
+            aimPoint.z = hit.point.z;
 
-			// Yellow line for input-based aim before any corrections
-			Debug.DrawLine(baseWeapon.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
+            // Yellow line for input-based aim before any corrections
+            Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
 
-			if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > baseWeapon.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - baseWeapon.transform.GetChild(0).transform.position.y, 0, 1);
-            
-			/* old code, only for reference until aiming is working completely as intended.
+            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
+
+            /* old code, only for reference until aiming is working completely as intended.
 			{
                 if ((hit.point.y) > baseWeapon.transform.GetChild(0).transform.position.y) // are we aiming above where the player currently is
                     aimPoint.y = hit.point.y + AIM_OFFSET;
@@ -71,20 +107,20 @@ public class PlayerController : Unit
                     aimPoint.y = baseWeapon.transform.GetChild(0).transform.position.y;
 			}*/
 
-			// Rotate player towards new aim point
+            // Rotate player towards new aim point
             Quaternion targetRotation = Quaternion.LookRotation(aimPoint - transform.position);
             targetRotation.x = 0;
             targetRotation.z = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, sensitivity * Time.deltaTime);
 
-			// weapon rotation independent of player rotation 
-			baseWeapon.transform.rotation = Quaternion.LookRotation(aimPoint - baseWeapon.transform.position);
+            // weapon rotation independent of player rotation 
+            weaponObject.transform.rotation = Quaternion.LookRotation(aimPoint - weaponObject.transform.position);
 
-			// Show where the gun is aiming with a cyan line
-			Debug.DrawRay(baseWeapon.transform.GetChild(0).transform.position, baseWeapon.transform.GetChild(0).transform.forward * 100, Color.cyan, 0);
+            // Show where the gun is aiming with a cyan line
+            Debug.DrawRay(weaponObject.transform.GetChild(0).transform.position, weaponObject.transform.GetChild(0).transform.forward * 100, Color.cyan, 0);
 
-			// Show where we're aiming with the offset included with a pink line
-			Debug.DrawLine(baseWeapon.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
+            // Show where we're aiming with the offset included with a pink line
+            Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
         }
     }
     private void movement()
@@ -126,13 +162,8 @@ public class PlayerController : Unit
         setDefense(playerClass.baseDefense);
     }
 
-    private void swapWeapon(WeaponTemplate newWeapon)
+    private void EquipWeapon(int WeaponIndex = 0)
     {
-        weaponTemplate = newWeapon;
-        weapon.equipWeapon(newWeapon);
-    }
-    private void swapWeapon()
-    {
-        weapon.equipWeapon(weaponTemplate);
+        weaponController.equipWeapon(Weapons[WeaponIndex]);
     }
 }

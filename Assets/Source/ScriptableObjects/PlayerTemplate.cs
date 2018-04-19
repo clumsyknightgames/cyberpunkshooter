@@ -14,9 +14,17 @@ public class PlayerTemplate : ScriptableObject
     [Space(10)]
     [Header("Vitals")]
     public int maximumHealth;
-    [Space(3)]
     public int maximumEnergy;
-    [Space(3)]
     public int baseDefense;
 
+    [Space(10)]
+    [Header("Inventory")]
+    public List<WeaponTemplate> weapons;
+    public List<MagazineSlot> magazines;
+}
+[System.Serializable]
+public struct MagazineSlot
+{
+    public magazineTemplate MagazineType;
+    public int MagazineCount;
 }
