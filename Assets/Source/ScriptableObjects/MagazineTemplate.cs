@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Magazine", menuName = "Player/Items/New Magazine")]
 public class magazineTemplate : ScriptableObject
 {
+    public string Name;
+
     public ammoTemplate ammoType;
     public int ammoCount;
     public float reloadMultiplier = 1;

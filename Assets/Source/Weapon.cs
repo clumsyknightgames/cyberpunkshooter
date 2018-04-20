@@ -74,7 +74,7 @@ public class Weapon : MonoBehaviour {
                 currentAmmo = MagToReload.ammoCount;
                 ammoData = MagToReload.ammoType;
                 player.Magazines[MagToReload]--;
-                Debug.Log("Reloaded weapon");
+                Debug.Log("Reloaded " + weaponData.Name + " with " + MagToReload.Name + ".");
             }
         }
     }
@@ -142,7 +142,7 @@ public class Weapon : MonoBehaviour {
                 ejectionVector.z = 5 + Random.Range(-0.5f, 0.5f);
 
                 // Set ejection torque with slight randomisation
-                Vector3 ejectionTorque = new Vector3(Random.Range(-3f, -5f), Random.Range(-3f, -5f), Random.Range(3f, 5f));
+                Vector3 ejectionTorque = new Vector3(Random.Range(-3f, -5f), Random.Range(-3f, -5f), Random.Range(-3f, -5f));
 
                 // Apply force and torque
                 newBrass.GetComponent<Rigidbody>().velocity = ejectionPort.transform.TransformDirection(ejectionVector);
@@ -168,6 +168,8 @@ public class Weapon : MonoBehaviour {
 
         gameObject.GetComponent<MeshFilter>().mesh = weaponData.weaponModel;
         gameObject.GetComponent<Renderer>().material = weaponData.weaponMaterial;
+
+        Debug.Log(weaponData.Name + " equipped.");
 
         /*foreach(AudioSource s in wep.weaponShootSounds)
         {

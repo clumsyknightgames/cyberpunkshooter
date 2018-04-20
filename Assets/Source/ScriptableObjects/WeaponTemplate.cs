@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Weapon", menuName = "Player/Items/New Weapon")]
 public class WeaponTemplate : ScriptableObject
 {
+    public string Name;
+
     public float damageMultiplier;
     public float weaponRateOfFire;
     public float weaponRange;

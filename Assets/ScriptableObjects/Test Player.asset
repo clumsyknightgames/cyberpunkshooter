@@ -19,6 +19,9 @@ MonoBehaviour:
   baseDefense: 10
   weapons:
   - {fileID: 11400000, guid: b0dfe1d468a203343a65e173b9b49355, type: 2}
+  - {fileID: 11400000, guid: 952c674e93be0904f86df5827588d81e, type: 2}
   magazines:
   - MagazineType: {fileID: 11400000, guid: f5baf00fd1891b646baa6c56c78f4382, type: 2}
+    MagazineCount: 10
+  - MagazineType: {fileID: 11400000, guid: e0f373b6cb8c0e84c94f38dc945f6e69, type: 2}
     MagazineCount: 10

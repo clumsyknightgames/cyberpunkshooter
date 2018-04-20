@@ -11,6 +11,8 @@ public class PlayerController : Unit
     private const float AIM_OFFSET = 1f;
     private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
+    private int EquippedWeapon = 0;
+
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
     // Weapon variables
@@ -69,6 +71,16 @@ public class PlayerController : Unit
         else if (!Input.GetButton("Use"))
         {
             handledKeys["Use"] = false;
+        }
+
+        if (Input.GetButton("SwapWeapon") && !handledKeys["SwapWeapon"])
+        {
+            EquipNextWeapon();
+            handledKeys["SwapWeapon"] = true;
+        }
+        else if (!Input.GetButton("SwapWeapon"))
+        {
+            handledKeys["SwapWeapon"] = false;
         }
 
         if (Input.GetButton("Reload") && !handledKeys["Reload"])
@@ -164,6 +176,17 @@ public class PlayerController : Unit
 
     private void EquipWeapon(int WeaponIndex = 0)
     {
+        EquippedWeapon = WeaponIndex;
         weaponController.equipWeapon(Weapons[WeaponIndex]);
+    }
+
+    private void EquipNextWeapon()
+    {
+        int nextWeapon = EquippedWeapon + 1;
+        if (nextWeapon >= Weapons.Count)
+        {
+            nextWeapon = 0;
+        }
+        EquipWeapon(nextWeapon);
     }
 }

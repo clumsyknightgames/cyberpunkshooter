@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New Ammo Type", menuName = "Player/Items/New Ammo Type")]
 public class ammoTemplate : ScriptableObject
 {
-    public string ammoName;
+    public string Name;
     public DamageRange DamageRange;
    
     [Space(10)]
