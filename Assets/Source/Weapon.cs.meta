@@ -5,7 +5,11 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BrassPrefab: {fileID: 1454332907540856, guid: 34e49ce028f0480418b9b935e188eb07,
+      type: 2}
+  - MagazinePrefab: {fileID: 1574898979357650, guid: 99850a6dacae29b4dba49bb1bc5c2c41,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

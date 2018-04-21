@@ -15,6 +15,7 @@ public class WeaponTemplate : ScriptableObject
 
     [Space(10)]
     [Header("Weapon Artwork")]
+    public GameObject BlendFile;
     public Mesh weaponModel;
     public Material weaponMaterial;
 

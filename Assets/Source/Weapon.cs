@@ -9,14 +9,18 @@ public class Weapon : MonoBehaviour {
     protected int currentAmmo;
 
     private GameObject muzzle;
-    private GameObject ejectionPort;
-    private GameObject magwell;
-    public GameObject Brass;
+    public GameObject BrassPrefab;
+    public GameObject MagazinePrefab;
+    private GameObject gunModel;
+    private Transform ejectionPort;
+    private Transform ejectionDirection;
+    private Transform magazineWell;
 
     private PlayerController player;
 
     private PlayerTemplate playerData;
     private WeaponTemplate weaponData;
+    private magazineTemplate loadedMag;
     private ammoTemplate ammoData;
 
     public List<magazineTemplate> MagazineTypes;
@@ -57,8 +61,6 @@ public class Weapon : MonoBehaviour {
     private void Start()
     {
         muzzle = transform.GetChild(0).gameObject;
-        ejectionPort = transform.GetChild(1).gameObject;
-        magwell = transform.GetChild(1).gameObject;
         player = transform.parent.gameObject.GetComponent<PlayerController>();
         currentAmmo = 0;
     }
@@ -70,10 +72,34 @@ public class Weapon : MonoBehaviour {
             magazineTemplate MagToReload = GetFirstMagType();
             if (player.Magazines[MagToReload] > 0)
             {
-                // Insert reload timer here
+                // Detach old magazine
+                Transform oldMag;
+                if (oldMag = transform.Find("Magazine"))
+                {
+                    Debug.Log("Ejecting old mag.");
+                    oldMag.gameObject.AddComponent<Rigidbody>();
+                    oldMag.gameObject.GetComponent<Rigidbody>().mass = 0.1f;
+                    oldMag.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    oldMag.parent = transform.parent.parent;
+                    oldMag.position = new Vector3(oldMag.position.x, oldMag.position.y - 0.05f, oldMag.position.z);
+                }
+
+                // Refill ammo
                 currentAmmo = MagToReload.ammoCount;
                 ammoData = MagToReload.ammoType;
                 player.Magazines[MagToReload]--;
+                loadedMag = MagToReload;
+
+                // Attach a magazine to the gun
+                GameObject newMag = Instantiate(MagazinePrefab, transform.position, Quaternion.identity) as GameObject;
+                newMag.transform.name = "Magazine";
+                newMag.transform.SetParent(transform);
+                if (magazineWell = gunModel.transform.Find("Magazine"))
+                {
+                    newMag.transform.position = transform.TransformPoint(magazineWell.position);
+                }
+                newMag.transform.rotation = transform.rotation;
+
                 Debug.Log("Reloaded " + weaponData.Name + " with " + MagToReload.Name + ".");
             }
         }
@@ -115,7 +141,8 @@ public class Weapon : MonoBehaviour {
                 currentAmmo--;
                 RaycastHit hit;
 
-                Debug.DrawRay(muzzle.transform.position, muzzle.transform.forward * 100, Color.green, 10); // Show shot in green
+                // Show shot in green
+                Debug.DrawRay(muzzle.transform.position, muzzle.transform.forward * 100, Color.green, 10);
                 if (Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out hit, weaponRange))
                 {
                     // Show shot travel from muzzle to impact as red line
@@ -124,31 +151,31 @@ public class Weapon : MonoBehaviour {
                 }
                 Debug.Log("Pew.");
 
-                // Brass ejection
+                #region Brass ejection
                 // Create new instance, set parameters according to currently loaded ammo
-                GameObject newBrass = Instantiate(Brass);
+                GameObject newBrass = Instantiate(BrassPrefab);
                 newBrass.GetComponent<MeshFilter>().mesh = ammoData.brassModel;
                 newBrass.GetComponent<MeshRenderer>().material = ammoData.brassMaterial;
                 newBrass.GetComponent<MeshCollider>().sharedMesh = ammoData.brassModel;
 
                 // Move brass to ejection location and align with barrel
-                newBrass.transform.position = ejectionPort.transform.position;
+                newBrass.transform.position = transform.TransformPoint(ejectionPort.position);
                 newBrass.transform.rotation = muzzle.transform.rotation;
 
                 // Set ejection force with slight randomisation
-                Vector3 ejectionVector = new Vector3();
-                ejectionVector.x = Random.Range(-1f, 1f);
-                ejectionVector.y = Random.Range(-0.5f, 0.5f);
-                ejectionVector.z = 5 + Random.Range(-0.5f, 0.5f);
+                Vector3 worldEjectionVector = transform.TransformPoint(ejectionDirection.position) - transform.TransformPoint(ejectionPort.position);
+                Vector3 ejectionVector = (ejectionDirection.position - ejectionPort.position).normalized;
+                ejectionVector.x = ejectionVector.x + Random.Range(-0.3f, 0.6f);
+                ejectionVector.y = ejectionVector.y + Random.Range(-0.3f, 0.6f);
+                ejectionVector.z = ejectionVector.z + Random.Range(-0.3f, 0.6f);
+                worldEjectionVector = transform.TransformVector(ejectionVector);
 
-                // Set ejection torque with slight randomisation
-                Vector3 ejectionTorque = new Vector3(Random.Range(-3f, -5f), Random.Range(-3f, -5f), Random.Range(-3f, -5f));
+                // Apply force
+                newBrass.GetComponent<Rigidbody>().AddForceAtPosition(worldEjectionVector, ejectionPort.TransformPoint(new Vector3(0, 0.05f, 0)));
 
-                // Apply force and torque
-                newBrass.GetComponent<Rigidbody>().velocity = ejectionPort.transform.TransformDirection(ejectionVector);
-                newBrass.GetComponent<Rigidbody>().AddTorque(ejectionTorque);
-                
-                Debug.DrawRay(ejectionPort.transform.position, ejectionPort.transform.TransformDirection(ejectionVector), Color.blue, 0.1f);
+                // Draw a debug ray to show ejection vector
+                Debug.DrawRay(newBrass.transform.TransformPoint(new Vector3(0, 0.05f, 0)), worldEjectionVector, Color.blue, 0.1f);
+                #endregion
             }
             else
             {
@@ -161,6 +188,9 @@ public class Weapon : MonoBehaviour {
     public void equipWeapon(WeaponTemplate wep)
     {
         weaponData = wep;
+        gunModel = weaponData.BlendFile;
+        ejectionPort = gunModel.transform.Find("EjectionPort");
+        ejectionDirection = gunModel.transform.Find("EjectionDirection");
         MagazineTypes = weaponData.magazineTypes;
         rateOfFire = weaponData.weaponRateOfFire;
         // wepDamageRange = wep.weaponDamageRange;

@@ -147,10 +147,11 @@ public class PlayerController : Unit
         float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
         float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
 
-        Vector3 newPos = transform.position;
-        newPos = new Vector3(newPos.x + hSpeed, newPos.y, newPos.z + vSpeed);
+        Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
+        velocity.x = hSpeed;
+        velocity.z = vSpeed;
+        transform.GetComponent<Rigidbody>().velocity = velocity;
 
-        transform.position = newPos;
     }
 
     private void use()

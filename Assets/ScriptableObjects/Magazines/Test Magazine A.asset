@@ -15,6 +15,6 @@ MonoBehaviour:
   ammoType: {fileID: 11400000, guid: a6cdf2d4301a1954480a0fa86935c93d, type: 2}
   ammoCount: 30
   reloadMultiplier: 1
-  magazineModel: {fileID: 4300000, guid: 59fa4a055e243c24195c4bf89db4224d, type: 3}
+  magazineModel: {fileID: 4300000, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   magazineMaterial: {fileID: 2100000, guid: 59fa4a055e243c24195c4bf89db4224d, type: 3}
   magazineReloadSounds: []
