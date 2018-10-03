@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Test Player
   m_EditorClassIdentifier: 
   className: Testing Class
-  movementSpeed: 10
-  sprintSpeedModifier: 5
+  movementSpeed: 750
+  sprintSpeedModifier: 200
   maximumHealth: 100
   maximumEnergy: 100
   baseDefense: 10

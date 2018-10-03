@@ -143,18 +143,13 @@ public class PlayerController : Unit
             finalMovSpeed = movSpeed + sprintModifier;
         }
 
-        float forwardSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
-        float sideSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
+        float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
+        float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
 
-        Vector3 moveDir = new Vector3(sideSpeed, 0, forwardSpeed);
-
-        transform.position += moveDir;
-        // old code in case switching back to old movement system
-        //Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
-        //velocity.x = sideSpeed;
-        //velocity.z = forwardSpeed;
-        //transform.GetComponent<Rigidbody>().velocity = velocity;
-
+        Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
+        velocity.x = hSpeed;
+        velocity.z = vSpeed;
+        transform.GetComponent<Rigidbody>().velocity = velocity;
     }
 
     private void use()
