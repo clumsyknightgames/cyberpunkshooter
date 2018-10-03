@@ -5,21 +5,19 @@ using UnityEngine;
 public class Enemy : Unit
 {
     private GameObject target;
-    private float agroRange = 40f;
+    public SphereCollider agroSphere;
 
-    public float getAgroRange()
+    public EnemyTemplate e;
+
+    public List<GameObject> possibleTargets = new List<GameObject>();
+
+    private void Start()
     {
-        return agroRange;
-    }
-    public void setAgroRange(int value)
-    {
-        agroRange = value;
+        agroSphere.radius = e.agroRange;
     }
 
     public GameObject findNewTarget()
     {
-        // loop through GameObject.FindGameObjectsWithTag("Player"); and find the closest player
-        // check that the distance is <= agroRange;
 
         // temp to prevent compile errors
         GameObject t = new GameObject();
@@ -29,5 +27,16 @@ public class Enemy : Unit
     public void Spawn()
     {
         findNewTarget();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+            possibleTargets.Add(other.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        possibleTargets.Remove(other.gameObject);
     }
 }

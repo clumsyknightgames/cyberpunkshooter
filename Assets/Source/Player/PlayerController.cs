@@ -95,6 +95,7 @@ public class PlayerController : Unit
     }
     void FixedUpdate()
     {
+        // TODO: ignore sphere colliders / triggers when calculating where player is aiming
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -106,8 +107,6 @@ public class PlayerController : Unit
 
             // Yellow line for input-based aim before any corrections
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
-
-            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
 
             /* old code, only for reference until aiming is working completely as intended.
 			{
