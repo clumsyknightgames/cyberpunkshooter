@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Test Player
   m_EditorClassIdentifier: 
   className: Testing Class
-  movementSpeed: 1000
+  movementSpeed: 10
   sprintSpeedModifier: 5
   maximumHealth: 100
   maximumEnergy: 100

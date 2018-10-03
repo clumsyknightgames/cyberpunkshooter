@@ -8,7 +8,7 @@ public class PlayerController : Unit
     private Vector3 aimPoint;
 
     private const float USE_RANGE = 3f;
-    private const float AIM_OFFSET = 1f;
+    private const float AIM_OFFSET = 1.5f;
     private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
     private int EquippedWeapon = 0;
@@ -101,7 +101,7 @@ public class PlayerController : Unit
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.y = hit.point.y;
+            aimPoint.y = hit.point.y + AIM_OFFSET;
             aimPoint.z = hit.point.z;
 
             // Yellow line for input-based aim before any corrections
@@ -144,13 +144,17 @@ public class PlayerController : Unit
             finalMovSpeed = movSpeed + sprintModifier;
         }
 
-        float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
-        float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
+        float forwardSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
+        float sideSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
 
-        Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
-        velocity.x = hSpeed;
-        velocity.z = vSpeed;
-        transform.GetComponent<Rigidbody>().velocity = velocity;
+        Vector3 moveDir = new Vector3(sideSpeed, 0, forwardSpeed);
+
+        transform.position += moveDir;
+        // old code in case switching back to old movement system
+        //Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
+        //velocity.x = sideSpeed;
+        //velocity.z = forwardSpeed;
+        //transform.GetComponent<Rigidbody>().velocity = velocity;
 
     }
 
