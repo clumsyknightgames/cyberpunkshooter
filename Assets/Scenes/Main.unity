@@ -1257,6 +1257,18 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1213198257048168, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326397376318700, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383542670059958, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 65517109943508170, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
