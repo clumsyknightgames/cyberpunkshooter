@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3302535985ba6eb49ab9c93c6c0f2668, type: 3}
+  m_Name: Test Enemy
+  m_EditorClassIdentifier: 
+  enemyName: spooky boi
+  movementSpeed: 15
+  maximumHealth: 60
+  maximumEnergy: 0
+  baseDefense: 2
+  agroRange: 5
+  attackDamage: 5
+  attackSpeed: 1.2

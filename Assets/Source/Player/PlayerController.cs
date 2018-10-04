@@ -8,7 +8,7 @@ public class PlayerController : Unit
     private Vector3 aimPoint;
 
     private const float USE_RANGE = 3f;
-    private const float AIM_OFFSET = 1f;
+    private const float AIM_OFFSET = 1.5f;
     private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
     private int EquippedWeapon = 0;
@@ -18,7 +18,7 @@ public class PlayerController : Unit
     // Weapon variables
 
     public List<WeaponTemplate> Weapons;
-    public Dictionary<magazineTemplate, int> Magazines;
+    public Dictionary<MagazineTemplate, int> Magazines;
 
     private GameObject weaponObject;
     private Weapon weaponController;
@@ -36,7 +36,7 @@ public class PlayerController : Unit
         weaponObject = transform.GetChild(0).gameObject;
         weaponController = weaponObject.GetComponent<Weapon>();
 
-        Magazines = new Dictionary<magazineTemplate, int>();
+        Magazines = new Dictionary<MagazineTemplate, int>();
 
         foreach (MagazineSlot pair in playerClass.magazines)
         {
@@ -95,19 +95,18 @@ public class PlayerController : Unit
     }
     void FixedUpdate()
     {
+        // TODO: ignore sphere colliders / triggers when calculating where player is aiming
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.y = hit.point.y;
+            aimPoint.y = hit.point.y + AIM_OFFSET;
             aimPoint.z = hit.point.z;
 
             // Yellow line for input-based aim before any corrections
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
-
-            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
 
             /* old code, only for reference until aiming is working completely as intended.
 			{
@@ -151,7 +150,6 @@ public class PlayerController : Unit
         velocity.x = hSpeed;
         velocity.z = vSpeed;
         transform.GetComponent<Rigidbody>().velocity = velocity;
-
     }
 
     private void use()

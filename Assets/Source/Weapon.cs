@@ -20,10 +20,10 @@ public class Weapon : MonoBehaviour {
 
     private PlayerTemplate playerData;
     private WeaponTemplate weaponData;
-    private magazineTemplate loadedMag;
-    private ammoTemplate ammoData;
+    private MagazineTemplate loadedMag;
+    private AmmoTemplate ammoData;
 
-    public List<magazineTemplate> MagazineTypes;
+    public List<MagazineTemplate> MagazineTypes;
 
     private float rateOfFire;
     private float fireTimer;
@@ -69,7 +69,7 @@ public class Weapon : MonoBehaviour {
     {
         if (CanReload())
         {
-            magazineTemplate MagToReload = GetFirstMagType();
+            MagazineTemplate MagToReload = GetFirstMagType();
             if (player.Magazines[MagToReload] > 0)
             {
                 // Detach old magazine
@@ -105,9 +105,9 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    public magazineTemplate GetFirstMagType()
+    public MagazineTemplate GetFirstMagType()
     {
-        foreach (magazineTemplate magazineType in MagazineTypes)
+        foreach (MagazineTemplate magazineType in MagazineTypes)
         {
             if (player.Magazines.ContainsKey(magazineType))
             {

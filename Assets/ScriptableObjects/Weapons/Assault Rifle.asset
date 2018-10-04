@@ -3,21 +3,25 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0afedd48da4f2149a6abec4b5c03144, type: 3}
-  m_Name: Test Weapon
+  m_Name: Assault Rifle
   m_EditorClassIdentifier: 
   Name: Assault Rifle
+  Description: The indispensable friend of the infantry since its invention, the Assault
+    Rifle is an absolute classic. Many bullets in a short time coming from a compact
+    package.
   damageMultiplier: 1
   weaponRateOfFire: 0.1
   weaponRange: 60
   reloadTime: 2
   magazineTypes:
   - {fileID: 11400000, guid: f5baf00fd1891b646baa6c56c78f4382, type: 2}
+  weaponUpgrades: []
   BlendFile: {fileID: 100006, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   weaponModel: {fileID: 4300004, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   weaponMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}

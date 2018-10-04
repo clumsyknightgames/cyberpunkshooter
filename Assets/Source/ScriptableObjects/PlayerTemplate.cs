@@ -25,6 +25,6 @@ public class PlayerTemplate : ScriptableObject
 [System.Serializable]
 public struct MagazineSlot
 {
-    public magazineTemplate MagazineType;
+    public MagazineTemplate MagazineType;
     public int MagazineCount;
 }

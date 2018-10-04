@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+
+public class Unit : Entity
 {
     protected float movSpeed, sprintModifier;
     protected int curHealth, maxHealth;
+    protected float wounds; // remainder of damage after applying whole number to damage
     protected int curEnergy, maxEnergy;
 
     // percent damage is reduced by
-    protected const int DEFENSE_CAP = 75;
+    protected int DEFENSE_CAP = 75;
     protected int defense;
 
     protected bool isDead;
@@ -18,6 +20,7 @@ public class Unit : MonoBehaviour
     void Start ()
     {
         isDead = false;
+        wounds = 0f;
     }
 
     #region getters and setters
@@ -95,35 +98,52 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
-    // Utility functions
-    public bool damage(int value)
+    public override bool damage(float value)
     {
         float dmg = value * (defense/100);
-        setCurHealth(curHealth - Mathf.RoundToInt(dmg));
 
+        // get the whole number of the damage recieved and store in damage
+        if(dmg % 1 > 0) // if there is a remainder
+        {
+            wounds += dmg % 1; // place the remainder into the wounds variable
+
+            if (wounds >= 1) // if the damage has built up to a whole number
+            {
+                dmg += Mathf.FloorToInt(wounds); // add the lowest whole number to the damage
+                wounds -= Mathf.FloorToInt(wounds); // subtract the lowest whole number from the built up damage
+            }
+        }
+
+        setCurHealth(Mathf.FloorToInt(dmg));
         return isDead;
     }
 
-    public bool heal(int value)
+    public override bool heal(float value)
     {
         if (curHealth < maxHealth && curHealth > 0)
         {
-            setCurHealth(curHealth + value);
+            wounds -= value % 1;
+            if (wounds <= -1)
+            {
+                setCurHealth(curHealth + Mathf.FloorToInt(-1 * wounds));
+                wounds += -1 * Mathf.FloorToInt(wounds);
+            }
+            setCurHealth(curHealth + Mathf.FloorToInt(value));
             return true; // was able to heal player
         }
         else
             return false; // was unable to healer player
     }
 
-    public bool interactable()
+    public override bool interactable()
     {
         return isInteractable;
     }
-    public bool interact()
+    public override bool interact()
     {
         if (isInteractable)
         {
-            // interactable code here
+            // default interactable code here
             return true; // we were able to interact
         }
         return false; // interact failed

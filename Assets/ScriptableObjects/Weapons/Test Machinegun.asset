@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: Test Machinegun
   m_EditorClassIdentifier: 
   Name: Machinegun
+  Description: She weighs 150 kilograms and fires $200 custom-tooled cartridges at
+    10,000 rounds per minute. It costs $400,000 to fire this weapon for 12 seconds.
   damageMultiplier: 1
   weaponRateOfFire: 0.05
   weaponRange: 60
@@ -19,7 +21,9 @@ MonoBehaviour:
   magazineTypes:
   - {fileID: 11400000, guid: e0f373b6cb8c0e84c94f38dc945f6e69, type: 2}
   - {fileID: 11400000, guid: f5baf00fd1891b646baa6c56c78f4382, type: 2}
-  weaponModel: {fileID: 4300000, guid: 4f10bf6107b632a41943de1b0526e7ff, type: 3}
-  weaponMaterial: {fileID: 2100000, guid: 4f10bf6107b632a41943de1b0526e7ff, type: 3}
+  weaponUpgrades: []
+  BlendFile: {fileID: 100006, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
+  weaponModel: {fileID: 4300004, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
+  weaponMaterial: {fileID: 2100000, guid: c04cf0e2972dce74c9097a3a41dd4068, type: 2}
   weaponShootSounds: []
   weaponImpactSounds: []
