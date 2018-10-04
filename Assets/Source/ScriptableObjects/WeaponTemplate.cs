@@ -6,13 +6,15 @@ using UnityEngine;
 public class WeaponTemplate : ScriptableObject
 {
     public string Name;
+    public string Description;
 
     public float damageMultiplier;
     public float weaponRateOfFire;
     public float weaponRange;
     public float reloadTime;
-    public List<magazineTemplate> magazineTypes;
-
+    public List<MagazineTemplate> magazineTypes;
+    public List<WeaponUpgradeTemplate> weaponUpgrades;
+    
     [Space(10)]
     [Header("Weapon Artwork")]
     public GameObject BlendFile;

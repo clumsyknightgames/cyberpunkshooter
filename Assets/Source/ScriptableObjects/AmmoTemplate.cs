@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName ="New Ammo Type", menuName = "Player/Items/New Ammo Type")]
-public class ammoTemplate : ScriptableObject
+public class AmmoTemplate : ScriptableObject
 {
     public string Name;
+    public string Description;
+
     public DamageRange DamageRange;
    
     [Space(10)]

@@ -18,7 +18,7 @@ public class PlayerController : Unit
     // Weapon variables
 
     public List<WeaponTemplate> Weapons;
-    public Dictionary<magazineTemplate, int> Magazines;
+    public Dictionary<MagazineTemplate, int> Magazines;
 
     private GameObject weaponObject;
     private Weapon weaponController;
@@ -36,7 +36,7 @@ public class PlayerController : Unit
         weaponObject = transform.GetChild(0).gameObject;
         weaponController = weaponObject.GetComponent<Weapon>();
 
-        Magazines = new Dictionary<magazineTemplate, int>();
+        Magazines = new Dictionary<MagazineTemplate, int>();
 
         foreach (MagazineSlot pair in playerClass.magazines)
         {

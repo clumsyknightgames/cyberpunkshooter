@@ -3,18 +3,20 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 391105787ef0a4f47ab6732844153f74, type: 3}
   m_Name: Test Magazine A
   m_EditorClassIdentifier: Assembly-CSharp::magazineTemplate
   Name: 30 Round Magazine
+  Description: 
   ammoType: {fileID: 11400000, guid: a6cdf2d4301a1954480a0fa86935c93d, type: 2}
   ammoCount: 30
   reloadMultiplier: 1
   magazineModel: {fileID: 4300000, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   magazineMaterial: {fileID: 2100000, guid: 59fa4a055e243c24195c4bf89db4224d, type: 3}
   magazineReloadSounds: []
+  magazineDropSounds: []

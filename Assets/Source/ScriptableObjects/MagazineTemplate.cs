@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New Magazine", menuName = "Player/Items/New Magazine")]
-public class magazineTemplate : ScriptableObject
+public class MagazineTemplate : ScriptableObject
 {
     public string Name;
+    public string Description;
 
-    public ammoTemplate ammoType;
+    public AmmoTemplate ammoType;
     public int ammoCount;
     public float reloadMultiplier = 1;
 
@@ -19,4 +20,5 @@ public class magazineTemplate : ScriptableObject
     [Space(10)]
     [Header("Sounds")]
     public AudioSource[] magazineReloadSounds;
+    public AudioSource[] magazineDropSounds;
 }
