@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,15 +54,14 @@ public class PlayerController : Unit
     {
         movement();
 
-        if (Input.GetButton("Fire") /*&& !handledKeys["Fire"]*/)
+        if (Input.GetButton("Fire"))
         {
             weaponController.Fire();
-            //handledKeys["Fire"] = true;
         }
-        /*else if (!Input.GetButton("Fire"))
+        if (Input.GetButton("CastRay"))
         {
-            handledKeys["Fire"] = false;
-        }*/
+            CastRay();
+        }
 
         if (Input.GetButton("Use") && !handledKeys["Use"])
         {
@@ -93,6 +93,18 @@ public class PlayerController : Unit
             handledKeys["Reload"] = false;
         }
     }
+
+    private void CastRay()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Raycast hit " + hit.transform.name);
+        }
+    }
+
     void FixedUpdate()
     {
         // TODO: ignore sphere colliders / triggers when calculating where player is aiming
@@ -102,11 +114,13 @@ public class PlayerController : Unit
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.y = hit.point.y + AIM_OFFSET;
+            aimPoint.y = hit.point.y;
             aimPoint.z = hit.point.z;
 
             // Yellow line for input-based aim before any corrections
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
+
+            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
 
             /* old code, only for reference until aiming is working completely as intended.
 			{

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Unit
 {
     private GameObject target;
-    public SphereCollider agroSphere;
+    public SphereCollider aggroSphere;
 
     public EnemyTemplate e;
 
@@ -13,7 +13,8 @@ public class Enemy : Unit
 
     private void Start()
     {
-        agroSphere.radius = e.agroRange;
+        aggroSphere.radius = e.agroRange;
+        aggroSphere.gameObject.layer = 2;
     }
 
     public GameObject findNewTarget()
@@ -31,8 +32,11 @@ public class Enemy : Unit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
+        {
             possibleTargets.Add(other.gameObject);
+            Debug.Log("Aggro raised by " + other.tag.ToString());
+        }
     }
 
     private void OnTriggerExit(Collider other)
