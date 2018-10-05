@@ -1,33 +1,39 @@
 fileFormatVersion: 2
-guid: aa35c6cad75efd84fa1649cd091a55ac
-timeCreated: 1524298828
-licenseType: Free
+guid: c624bbc49c50688478a7e0ec76f0aa93
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Barrel
     100002: Magazine
-    100004: //RootNode
-    100006: Rifle
+    100004: Rifle
+    100006: //RootNode
+    100008: EjectionPort
+    100010: EjectionDirection
     400000: Barrel
     400002: Magazine
-    400004: //RootNode
-    400006: Rifle
+    400004: Rifle
+    400006: //RootNode
+    400008: EjectionPort
+    400010: EjectionDirection
     2100000: unnamed
     2300000: Barrel
     2300002: Magazine
     2300004: Rifle
+    2300006: EjectionPort
+    2300008: EjectionDirection
     3300000: Barrel
     3300002: Magazine
     3300004: Rifle
+    3300006: EjectionPort
+    3300008: EjectionDirection
     4300000: Magazine
     4300002: Barrel
     4300004: Rifle
-    6400000: Barrel
-    6400002: Magazine
-    6400004: Rifle
+    4300006: EjectionPort
+    4300008: EjectionDirection
     7400000: Default Take
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 0
@@ -47,6 +53,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -60,7 +67,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -78,6 +85,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

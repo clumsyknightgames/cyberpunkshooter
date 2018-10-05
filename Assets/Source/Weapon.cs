@@ -82,6 +82,8 @@ public class Weapon : MonoBehaviour {
                     oldMag.gameObject.GetComponent<Rigidbody>().useGravity = true;
                     oldMag.parent = transform.parent.parent;
                     oldMag.position = new Vector3(oldMag.position.x, oldMag.position.y - 0.05f, oldMag.position.z);
+                    // Feed old mag into FIFO manager
+                    Global.FIFO(oldMag.gameObject);
                 }
 
                 // Refill ammo
@@ -175,6 +177,9 @@ public class Weapon : MonoBehaviour {
 
                 // Draw a debug ray to show ejection vector
                 Debug.DrawRay(newBrass.transform.TransformPoint(new Vector3(0, 0.05f, 0)), worldEjectionVector, Color.blue, 0.1f);
+
+                // Pile brass into FIFO manager
+                Global.FIFO(newBrass);
                 #endregion
             }
             else

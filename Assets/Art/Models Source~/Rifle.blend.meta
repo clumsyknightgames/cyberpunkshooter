@@ -1,18 +1,28 @@
 fileFormatVersion: 2
-guid: 59fa4a055e243c24195c4bf89db4224d
-timeCreated: 1524128636
-licenseType: Free
+guid: f98864ab5e0c4ab4c8b70d8ddac0b54a
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
-    2100000: defaultMat
-    2300000: default
-    3300000: default
-    4300000: default
+    100000: Barrel
+    100002: Magazine
+    100004: //RootNode
+    100006: Rifle
+    400000: Barrel
+    400002: Magazine
+    400004: //RootNode
+    400006: Rifle
+    2100000: unnamed
+    2300000: Barrel
+    2300002: Magazine
+    2300004: Rifle
+    3300000: Barrel
+    3300002: Magazine
+    3300004: Rifle
+    4300000: Magazine
+    4300002: Barrel
+    4300004: Rifle
+    7400000: Default Take
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -32,6 +42,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -63,6 +74,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -87,7 +100,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
