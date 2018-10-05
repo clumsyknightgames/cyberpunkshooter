@@ -9,7 +9,7 @@ public class PlayerController : Unit
     private Vector3 aimPoint;
 
     private const float USE_RANGE = 3f;
-    private const float AIM_OFFSET = 1.5f;
+    private const float AIM_OFFSET = 1.25f;
     private const float AIM_HEIGHT_DIFFERENCE_ALLOWANCE = 0.5f;
 
     private int EquippedWeapon = 0;
@@ -114,13 +114,14 @@ public class PlayerController : Unit
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.y = hit.point.y;
+            aimPoint.y = hit.point.y + AIM_OFFSET;
             aimPoint.z = hit.point.z;
 
             // Yellow line for input-based aim before any corrections
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
 
-            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y)) aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
+            if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y))
+                aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
 
             /* old code, only for reference until aiming is working completely as intended.
 			{

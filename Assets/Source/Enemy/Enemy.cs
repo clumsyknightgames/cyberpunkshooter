@@ -17,26 +17,10 @@ public class Enemy : Unit
         aggroSphere.gameObject.layer = 2;
     }
 
-    public GameObject findNewTarget()
-    {
-
-        // temp to prevent compile errors
-        GameObject t = new GameObject();
-        return t;
-    }
-
-    public void Spawn()
-    {
-        findNewTarget();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
-        {
             possibleTargets.Add(other.gameObject);
-            Debug.Log("Aggro raised by " + other.tag.ToString());
-        }
     }
 
     private void OnTriggerExit(Collider other)
