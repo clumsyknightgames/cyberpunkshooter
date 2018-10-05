@@ -13,12 +13,16 @@ public class WeaponTemplate : ScriptableObject
     public float weaponRange;
     public float reloadTime;
     public List<MagazineTemplate> magazineTypes;
-    public List<WeaponUpgradeTemplate> weaponUpgrades;
+
+    [Space(10)]
+    [Header("Mod Slots")]
+    public List<WeaponModSlot> weaponModSlots;
     
     [Space(10)]
     [Header("Weapon Artwork")]
     public GameObject BlendFile;
     public Mesh weaponModel;
+    public Mesh barrelModel;
     public Material weaponMaterial;
 
     [Space(10)]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Weapon Mod", menuName = "Player/Items/New Weapon Mod")]
 public class WeaponUpgradeTemplate : ScriptableObject
 {
     public string Name;

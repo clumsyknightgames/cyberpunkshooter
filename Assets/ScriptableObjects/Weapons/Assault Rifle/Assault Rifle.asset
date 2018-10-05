@@ -21,9 +21,11 @@ MonoBehaviour:
   reloadTime: 2
   magazineTypes:
   - {fileID: 11400000, guid: f5baf00fd1891b646baa6c56c78f4382, type: 2}
-  weaponUpgrades: []
+  weaponModSlots:
+  - {fileID: 11400000, guid: a9bcbe3e4029cfa49b0c1b7c35313f95, type: 2}
   BlendFile: {fileID: 100006, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   weaponModel: {fileID: 4300004, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
+  barrelModel: {fileID: 4300002, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
   weaponMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   weaponShootSounds: []
   weaponImpactSounds: []

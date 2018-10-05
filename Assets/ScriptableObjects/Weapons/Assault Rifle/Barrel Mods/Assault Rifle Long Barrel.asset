@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0829f49980d85f47ae8994094bfbd7a, type: 3}
+  m_Name: Assault Rifle Long Barrel
+  m_EditorClassIdentifier: 
+  Name: 
+  Description: 
+  BlendFile: {fileID: 100006, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
+  weaponModel: {fileID: 4300002, guid: c624bbc49c50688478a7e0ec76f0aa93, type: 3}
+  weaponMaterial: {fileID: 0}
+  weaponShootSounds: []
+  weaponImpactSounds: []

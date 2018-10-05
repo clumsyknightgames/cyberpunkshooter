@@ -204,6 +204,11 @@ public class Weapon : MonoBehaviour {
         gameObject.GetComponent<MeshFilter>().mesh = weaponData.weaponModel;
         gameObject.GetComponent<Renderer>().material = weaponData.weaponMaterial;
 
+        GameObject barrel = new GameObject();
+        barrel.AddComponent<MeshFilter>();
+        barrel.GetComponent<MeshFilter>().mesh = weaponData.barrelModel;
+        barrel.transform.position = transform.TransformPoint(gunModel.transform.Find("Barrel").position);
+
         Debug.Log(weaponData.Name + " equipped.");
 
         /*foreach(AudioSource s in wep.weaponShootSounds)
