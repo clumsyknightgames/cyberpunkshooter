@@ -33,31 +33,6 @@ public class Weapon : MonoBehaviour {
     public List<AudioSource> shootSounds = new List<AudioSource>();
     public List<AudioSource> impactSounds = new List<AudioSource>();
 
-    /*#region getters and setters
-    public int getMagAmmo()
-    {
-        return magAmmo;
-    }
-    public void setMagAmmo(int value)
-    {
-        if (value > magCapacity)
-            magAmmo = magCapacity;
-        else
-            magAmmo = value;
-    }
-
-    public int getNumMags()
-    {
-        return numMags;
-    }
-    public void setNumMags(int value)
-    {
-        if (value > maxMags)
-            numMags = maxMags;
-        else
-            numMags = value;
-    }
-    #endregion*/
     private void Start()
     {
         muzzle = transform.GetChild(0).gameObject;

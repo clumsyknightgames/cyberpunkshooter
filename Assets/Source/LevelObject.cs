@@ -4,58 +4,54 @@ using UnityEngine;
 
 public class LevelObject : Entity
 {
-    protected int curHealth, maxHealth;
-    protected float wounds;
-    // percent damage is reduced by
-    protected const int DEFENSE_CAP = 75;
-    protected int defense;
-   
-    protected bool isDestroyed;
-    protected bool isInteractable;
-    protected bool isDestructable;
-
-    void Start ()
+    protected int curHealth_;
+    public int curHealth
     {
-        isDestroyed = false;
-	}
-
-    #region getters and setters
-    public int getCurHealth()
-    {
-        return curHealth;
-    }
-    public void setCurHealth(int value)
-    {
-        curHealth = value;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
-        else if (curHealth < 0)
+        get { return curHealth_; }
+        set
         {
-            curHealth = 0;
-            isDestroyed = true;
+            curHealth_ = value;
+
+            if (curHealth_ > maxHealth_)
+                curHealth_ = maxHealth_;
+            else if (curHealth_ < 0)
+            {
+                curHealth_ = 0;
+                isDestroyed = true;
+            }
         }
     }
-    public int getMaxHealth()
-    {
-        return maxHealth;
-    }
-    public void setMaxHealth(int value)
-    {
-        maxHealth = value;
-    }
-    public int getDefense()
-    {
-        return defense;
-    }
-    public void setDefense(int value)
-    {
-        defense = value;
+    protected int maxHealth_;
+    public int maxHealth { get { return maxHealth_; } set { maxHealth_ = value; } }
 
-        if (defense > DEFENSE_CAP)
-            defense = DEFENSE_CAP;
-    }
-    #endregion
+    // buildup of damage and healing
+    protected float dmgBuildup;
+    protected float healBuildup;
 
+    // percent damage is reduced by
+    protected const int DEFENSE_CAP = 75;
+    protected int defense_;
+    public int defense
+    {
+        get { return defense_; }
+        set
+        {
+            defense = value;
+
+            if (defense > DEFENSE_CAP)
+                defense = DEFENSE_CAP;
+        }
+    }
+   
+    protected bool isDestroyed = false;
+    protected bool isInteractable = false;
+    protected bool isDestructable = true;
+
+    /// <summary>
+    /// Damage object based on a given value
+    /// </summary>
+    /// <param name="value">Damage to apply to object</param>
+    /// <returns>Returns true of the object was destroyed, false if not</returns>
     public override bool damage(float value)
     {
         if (isDestructable)
@@ -63,45 +59,62 @@ public class LevelObject : Entity
             float dmg = value * (defense / 100);
 
             // get the whole number of the damage recieved and store in damage
-            if (dmg % 1 > 0) // if there is a remainder
-            {
-                wounds += dmg % 1; // place the remainder into the wounds variable
+            if (dmg % 1 != 0) // if there is a remainder
+            { 
+                // place the remainder into the wounds variable
+                dmgBuildup += dmg % 1;
 
-                if (wounds >= 1) // if the damage has built up to a whole number
-                {
-                    dmg += Mathf.FloorToInt(wounds); // add the lowest whole number to the damage
-                    wounds -= Mathf.FloorToInt(wounds); // subtract the lowest whole number from the built up damage
+                if (dmgBuildup >= 1) // if the damage has built up to a whole number
+                { 
+                    // add the lowest whole number to the damage
+                    dmg += Mathf.FloorToInt(dmgBuildup);
+                    // subtract the lowest whole number from the built up damage
+                    dmgBuildup -= Mathf.FloorToInt(dmgBuildup); 
                 }
             }
 
-            setCurHealth(Mathf.FloorToInt(dmg));
+            // subtract the damage to be applied from current health
+            curHealth -= Mathf.FloorToInt(dmg);
 
             return isDestroyed;
         }
         else
             return false;
     }
+
+    /// <summary>
+    /// Heal the object for the given amount
+    /// </summary>
+    /// <param name="value">Amount we want to heal the object by</param>
+    /// <returns>Returns true if able to heal, false if not</returns>
     public override bool heal(float value)
     {
+        // make sure current health is less than max health, and greater than zero
         if (curHealth < maxHealth && curHealth > 0)
         {
-            wounds -= value % 1;
-            if (wounds <= -1)
+            dmgBuildup -= value;
+
+            // if the amount we want to heal is above the amount of damage buildup
+            if(dmgBuildup < 0)
             {
-                setCurHealth(curHealth + Mathf.FloorToInt(-1 * wounds));
-                wounds += -1 * Mathf.FloorToInt(wounds);
+                // heal buildup is the amount of damage buildup that has gone netagive after adding what we want to heal
+                healBuildup += dmgBuildup * -1;
+                dmgBuildup = 0;
+
+                // heal the object for the whole number
+                curHealth += Mathf.FloorToInt(healBuildup);
+
+                // store remainder of heal in the buildup
+                healBuildup = healBuildup % 1;
             }
-            setCurHealth(curHealth + Mathf.FloorToInt(value));
-            return true; // was able to heal player
+            return true; // was able to heal object
         }
         else
-            return false; // was unable to healer player
+            return false; // was unable to healer object
     }
 
-    public override bool interactable()
-    {
-        return isInteractable;
-    }
+    public override bool interactable() { return isInteractable; }
+
     public override bool interact()
     {
         if(isInteractable)
