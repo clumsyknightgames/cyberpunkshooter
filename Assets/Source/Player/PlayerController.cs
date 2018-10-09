@@ -165,16 +165,16 @@ public class PlayerController : Unit
 
     private void initializePlayerClass()
     {
-        setMovSpeed(playerClass.movementSpeed);
-        setSprintModifier(playerClass.sprintSpeedModifier);
+        movSpeed = playerClass.movementSpeed;
+        sprintModifier = playerClass.sprintSpeedModifier;
 
-        setMaxHealth(playerClass.maximumHealth);
-        setCurHealth(getMaxHealth());
+        health.maxResource = playerClass.maximumHealth;
+        health.curResource = health.curResource;
 
-        setMaxEnergy(playerClass.maximumEnergy);
-        setCurEnergy(getMaxEnergy());
+        energy.maxResource = playerClass.maximumEnergy;
+        energy.curResource = energy.curResource;
 
-        setDefense(playerClass.baseDefense);
+        defense = playerClass.baseDefense;
 
         AIM_OFFSET = playerClass.AimOffset;
     }
