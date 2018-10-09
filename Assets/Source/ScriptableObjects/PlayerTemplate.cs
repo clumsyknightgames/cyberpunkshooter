@@ -21,7 +21,12 @@ public class PlayerTemplate : ScriptableObject
     [Header("Inventory")]
     public List<WeaponTemplate> weapons;
     public List<MagazineSlot> magazines;
+
+    [Space(10)]
+    [Header("Other")]
+    public float AimOffset = 1.15f;
 }
+
 [System.Serializable]
 public struct MagazineSlot
 {
