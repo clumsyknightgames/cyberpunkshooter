@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-public class Entity : MonoBehaviour
+public class Entity : LevelObject
 {
     public bool isDestroyed;
-    public bool isInteractable;
-    public bool isDestructable;
+    public bool isInvulnerable;
 
     // buildup of damage and healing
     private float dmgBuildup;
@@ -31,8 +30,7 @@ public class Entity : MonoBehaviour
     private void Start()
     {
         isDestroyed = false;
-        isInteractable = false;
-        isDestructable = true;
+        isInvulnerable = true;
     
         dmgBuildup = 0;
         healBuildup = 0;
@@ -45,7 +43,7 @@ public class Entity : MonoBehaviour
     /// <returns>Returns true of the object was destroyed, false if not</returns>
     public virtual bool damage(float value)
     {
-        if (isDestructable)
+        if (!isInvulnerable)
         {
             float dmg = value * (defense / 100);
 
@@ -104,13 +102,5 @@ public class Entity : MonoBehaviour
             return false; // was unable to healer object
     }
 
-    public virtual bool interact()
-    {
-        if (isInteractable)
-        {
-            // default interactable code here
-            return true; // we were able to interact
-        }
-        return false; // interact failed
-    }
+    //public override bool interact() { }
 }
