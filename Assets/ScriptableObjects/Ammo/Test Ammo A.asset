@@ -13,9 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ammoTemplate
   Name: 
   Description: 
-  DamageRange:
-    minDamage: 0
-    maxDamage: 0
+  Damage: 10
   brassModel: {fileID: 4300000, guid: e02b522446dc89543909292a9ccd18d8, type: 3}
   brassMaterial: {fileID: 2100000, guid: c04cf0e2972dce74c9097a3a41dd4068, type: 2}
   brassImpactSounds: []

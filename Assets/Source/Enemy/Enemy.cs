@@ -9,13 +9,14 @@ public class Enemy : Unit
     public SphereCollider aggroSphere;
 
     public EnemyTemplate enemyType;
+    private float atkDamage;
+    private float atkSpeed;
 
     public List<GameObject> possibleTargets = new List<GameObject>();
 
     private void Start()
     {
-        aggroSphere.radius = enemyType.agroRange;
-        aggroSphere.gameObject.layer = 2;
+        initializeEnemy();
     }
 
     /// <summary>
@@ -41,5 +42,26 @@ public class Enemy : Unit
         {
             hasTarget = false;
         }
+    }
+
+    private void initializeEnemy()
+    {
+        name = enemyType.enemyName;
+
+        movSpeed = enemyType.movementSpeed;
+
+        health.maxResource = enemyType.maximumHealth;
+        health.curResource = health.maxResource;
+
+        energy.maxResource = enemyType.maximumEnergy;
+        energy.curResource = energy.maxResource;
+
+        defense = enemyType.baseDefense;
+
+        atkDamage = enemyType.attackDamage;
+        atkSpeed = enemyType.attackSpeed;
+
+        aggroSphere.radius = enemyType.agroRange;
+        aggroSphere.gameObject.layer = 2;
     }
 }

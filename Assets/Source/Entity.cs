@@ -27,6 +27,7 @@ public class Entity : LevelObject
                 defense_ = DEFENSE_CAP;
         }
     }
+
     private void Start()
     {
         isDestroyed = false;
@@ -45,27 +46,41 @@ public class Entity : LevelObject
     {
         if (!isInvulnerable)
         {
-            float dmg = value * (defense / 100);
+            float dmgRecieved = 9.8f;
+            float dmgTaken = 0;
+            Debug.Log(value + " * ((100 - " + defense + ") / 100) = " + value * ((100 - defense) / 100));
 
             // get the whole number of the damage recieved and store in damage
-            if (dmg % 1 != 0) // if there is a remainder
+            if (dmgRecieved % 1 != 0) // if there is a remainder
             {
                 // place the remainder into the wounds variable
-                dmgBuildup += dmg % 1;
+                dmgBuildup += dmgRecieved % 1;
 
                 if (dmgBuildup >= 1) // if the damage has built up to a whole number
                 {
                     // add the lowest whole number to the damage
-                    dmg += Mathf.FloorToInt(dmgBuildup);
+                    dmgTaken += Mathf.FloorToInt(dmgBuildup);
                     // subtract the lowest whole number from the built up damage
                     dmgBuildup -= Mathf.FloorToInt(dmgBuildup);
                 }
             }
-
+            dmgTaken += Mathf.FloorToInt(dmgRecieved);
             // subtract the damage to be applied from current health
-            health.curResource -= Mathf.FloorToInt(dmg);
+            health.curResource -= Mathf.FloorToInt(dmgTaken);
 
-            return isDestroyed;
+            Debug.Log("Entity: " + name + " took " + dmgTaken + " damage. Health left: " + health.curResource);
+
+            if(health.curResource > 0)
+            {
+                return false;
+            }
+            else
+            {
+                Debug.Log("DED");
+                isDestroyed = true;
+                kill();
+                return true;
+            }
         }
         else
             return false;
@@ -103,4 +118,12 @@ public class Entity : LevelObject
     }
 
     //public override bool interact() { }
+
+    /// <summary>
+    /// called when the object reaches 0 health
+    /// </summary>
+    private void kill()
+    {
+        Destroy(this);
+    }
 }

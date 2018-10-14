@@ -9,7 +9,7 @@ public class AmmoTemplate : ScriptableObject
     public string Name;
     public string Description;
 
-    public DamageRange DamageRange;
+    public float Damage;
    
     [Space(10)]
     [Header("Brass Artwork")]
@@ -20,11 +20,4 @@ public class AmmoTemplate : ScriptableObject
     [Header("Sounds")]
     public AudioSource[] brassImpactSounds;
     public AudioSource[] bulletImpactSounds;
-}
-
-[System.Serializable]
-public struct DamageRange
-{
-    public float minDamage;
-    public float maxDamage;
 }

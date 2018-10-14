@@ -7,6 +7,7 @@ public class PlayerController : Unit
 {
     private float sensitivity;
     private Vector3 aimPoint;
+    private float AIM_OFFSET = 1.25f;
 
     private const float USE_RANGE = 3f;
 
@@ -23,7 +24,6 @@ public class PlayerController : Unit
     private Weapon weaponController;
 
     public PlayerTemplate playerClass;
-    private float AIM_OFFSET;
 
     private Dictionary<string, bool> handledKeys;
 
@@ -50,6 +50,27 @@ public class PlayerController : Unit
     }
 
     void Update()
+    {
+        manageInput();
+    }
+    void FixedUpdate()
+    {
+        movement();
+        aimAtMouse();
+    }
+
+    private void CastRay()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Raycast hit " + hit.transform.name);
+        }
+    }
+
+    private void manageInput()
     {
         if (Input.GetButton("Fire"))
         {
@@ -90,34 +111,21 @@ public class PlayerController : Unit
             handledKeys["Reload"] = false;
         }
     }
-
-    private void CastRay()
+    private void aimAtMouse()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            Debug.Log("Raycast hit " + hit.transform.name);
-        }
-    }
-
-    void FixedUpdate()
-    {
-        movement();
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
         {
             aimPoint.x = hit.point.x;
-            aimPoint.y = hit.point.y + AIM_OFFSET;
+            aimPoint.y = hit.point.y;
             aimPoint.z = hit.point.z;
 
             // Yellow line for input-based aim before any corrections
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.yellow, 0);
 
+            // Correct aim for shooting up ramps
             if ((hit.transform.gameObject.layer == LayerMask.NameToLayer("ground")) && ((hit.point.y) > weaponObject.transform.GetChild(0).transform.position.y))
                 aimPoint.y = hit.point.y + AIM_OFFSET * hit.normal.y * Mathf.Clamp(hit.point.y - weaponObject.transform.GetChild(0).transform.position.y, 0, 1);
 
@@ -135,7 +143,6 @@ public class PlayerController : Unit
 
             // Show where we're aiming with the offset included with a pink line
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
-
         }
     }
     private void movement()
@@ -169,14 +176,12 @@ public class PlayerController : Unit
         sprintModifier = playerClass.sprintSpeedModifier;
 
         health.maxResource = playerClass.maximumHealth;
-        health.curResource = health.curResource;
+        health.curResource = health.maxResource;
 
         energy.maxResource = playerClass.maximumEnergy;
-        energy.curResource = energy.curResource;
+        energy.curResource = energy.maxResource;
 
         defense = playerClass.baseDefense;
-
-        AIM_OFFSET = playerClass.AimOffset;
     }
 
     private void EquipWeapon(int WeaponIndex = 0)

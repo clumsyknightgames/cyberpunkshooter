@@ -125,8 +125,12 @@ public class Weapon : MonoBehaviour {
                     // Show shot travel from muzzle to impact as red line
                     Debug.DrawLine(muzzle.transform.position, hit.point, Color.red, 10);
                     Debug.Log("HIT: " + hit.collider.gameObject);
+                    if (hit.collider.gameObject.GetComponent<Entity>())
+                    {
+                        Debug.Log("Weapon fired for " + getDamage());
+                        hit.collider.gameObject.GetComponent<Entity>().damage(getDamage());
+                    }
                 }
-                Debug.Log("Pew.");
 
                 #region Brass ejection
                 // Create new instance, set parameters according to currently loaded ammo
@@ -195,4 +199,6 @@ public class Weapon : MonoBehaviour {
             impactSounds.Add(s);
         }*/
     }
+
+    public float getDamage() { return ammoData.Damage; }
 }
