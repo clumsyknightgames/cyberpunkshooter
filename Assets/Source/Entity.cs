@@ -121,7 +121,7 @@ public class Entity : LevelObject
     /// <summary>
     /// called when the object reaches 0 health
     /// </summary>
-    private void kill()
+    protected virtual void kill()
     {
         Destroy(gameObject);
     }

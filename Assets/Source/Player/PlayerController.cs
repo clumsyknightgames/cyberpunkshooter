@@ -110,6 +110,8 @@ public class PlayerController : Unit
         {
             handledKeys["Reload"] = false;
         }
+
+
     }
     private void aimAtMouse()
     {
@@ -148,6 +150,7 @@ public class PlayerController : Unit
     private void movement()
     {
         float finalMovSpeed = movSpeed;
+
         // Speed boost system, currently no stamina system, possibly add later, or not at all?
         if (Input.GetButton("Sprint"))
         {
@@ -157,10 +160,10 @@ public class PlayerController : Unit
         float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
         float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
 
-        Vector3 velocity = transform.GetComponent<Rigidbody>().velocity;
-        velocity.x = hSpeed;
-        velocity.z = vSpeed;
-        transform.GetComponent<Rigidbody>().velocity = velocity;
+        Vector3 moveVel = transform.GetComponent<Rigidbody>().velocity;
+        moveVel.x = hSpeed;
+        moveVel.z = vSpeed;
+        transform.GetComponent<Rigidbody>().velocity = moveVel;
     }
 
     private void use()
@@ -169,6 +172,8 @@ public class PlayerController : Unit
 
         // if it is, call the interact function on the object hit by the raycast
     }
+	
+    protected override void kill(){ gameObject.SetActive(false); }
 
     private void initializePlayerClass()
     {
