@@ -109,8 +109,8 @@ public class Weapon : MonoBehaviour {
 
     public void Fire()
     {
-        fireTimer += Time.deltaTime;
-        if (fireTimer >= rateOfFire)
+        fireTimer -= Time.deltaTime;
+        if (fireTimer <= 0)
         {
             //Debug.Log("Ready to fire after " + fireTimer + "s.");
             if (currentAmmo > 0)
@@ -165,7 +165,7 @@ public class Weapon : MonoBehaviour {
             {
                 Debug.Log("Magazine empty");
             }
-            fireTimer = 0;
+            fireTimer = rateOfFire;
         }
     }
 

@@ -46,9 +46,8 @@ public class Entity : LevelObject
     {
         if (!isInvulnerable)
         {
-            float dmgRecieved = 9.8f;
+            float dmgRecieved = value * ((100 - defense) / 100f);
             float dmgTaken = 0;
-            Debug.Log(value + " * ((100 - " + defense + ") / 100) = " + value * ((100 - defense) / 100));
 
             // get the whole number of the damage recieved and store in damage
             if (dmgRecieved % 1 != 0) // if there is a remainder
@@ -124,6 +123,6 @@ public class Entity : LevelObject
     /// </summary>
     private void kill()
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
 }
