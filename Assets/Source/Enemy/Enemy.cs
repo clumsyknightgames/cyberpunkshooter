@@ -9,8 +9,11 @@ public class Enemy : Unit
     public SphereCollider aggroSphere;
 
     public EnemyTemplate enemyType;
+
+    public bool canAttack;
     private float atkDamage;
     private float atkSpeed;
+    private float atkRange;
 
     public List<GameObject> possibleTargets = new List<GameObject>();
 
@@ -58,10 +61,62 @@ public class Enemy : Unit
 
         defense = enemyType.baseDefense;
 
+        canAttack = true;
         atkDamage = enemyType.attackDamage;
         atkSpeed = enemyType.attackSpeed;
+        atkRange = enemyType.attackRange;
 
         aggroSphere.radius = enemyType.agroRange;
         aggroSphere.gameObject.layer = 2;
+    }
+
+    /// <summary>
+    /// If the enemy has not already attacked find the closest target and 
+    /// attack if it's in range
+    /// </summary>
+    protected virtual void attack()
+    {
+        if(canAttack)
+        {
+            GameObject target = getClosestTarget();
+            if(target != null)
+            {
+                // check if target is in attack range
+                if (Vector3.Distance(target.transform.position, transform.position) <= atkRange)
+                {
+                    canAttack = false;
+                    StartCoroutine("AttackCooldown");
+                }
+            }
+        }
+    }
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(atkSpeed);
+        canAttack = true;
+        StopCoroutine("AttackCooldown");
+    }
+
+    /// <summary>
+    /// Go through the list of possible targets and return the closest one
+    /// </summary>
+    /// <returns>The closest target as a GameObject</returns>
+    protected GameObject getClosestTarget()
+    {
+        GameObject closestTarget = null;
+        float closestDist = -1;
+
+        foreach (GameObject t in possibleTargets)
+        {
+            float dist = Vector3.Distance(t.transform.position, transform.position);
+            if (closestDist == -1 || dist < closestDist)
+            {
+                closestDist = dist;
+                closestTarget = t;
+            }
+
+        }
+
+        return closestTarget;
     }
 }

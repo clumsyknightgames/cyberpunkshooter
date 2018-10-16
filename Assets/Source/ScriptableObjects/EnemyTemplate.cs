@@ -22,4 +22,5 @@ public class EnemyTemplate : ScriptableObject
     public float agroRange;
     public float attackDamage;
     public float attackSpeed; // attacks per second
+    public float attackRange;
 }

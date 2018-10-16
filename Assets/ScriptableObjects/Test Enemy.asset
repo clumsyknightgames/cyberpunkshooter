@@ -18,4 +18,5 @@ MonoBehaviour:
   baseDefense: 2
   agroRange: 5
   attackDamage: 5
-  attackSpeed: 1.2
+  attackSpeed: 0.8
+  attackRange: 2.5
