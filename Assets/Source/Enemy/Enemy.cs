@@ -15,6 +15,8 @@ public class Enemy : Unit
     private float atkSpeed;
     private float atkRange;
 
+    private const float TARGET_SEEK_SPEED = 1;
+
     public List<GameObject> possibleTargets = new List<GameObject>();
 
     private void Start()
@@ -31,7 +33,10 @@ public class Enemy : Unit
         possibleTargets.Add(t);
 
         if (!hasTarget)
+        {
             hasTarget = true;
+            InvokeRepeating("attack", TARGET_SEEK_SPEED, TARGET_SEEK_SPEED);
+        }
     }
     /// <summary>
     /// Remove a gameobject from the list of possible targets
@@ -44,6 +49,7 @@ public class Enemy : Unit
         if (possibleTargets.Count <= 0)
         {
             hasTarget = false;
+            CancelInvoke("attack");
         }
     }
 
@@ -85,16 +91,23 @@ public class Enemy : Unit
                 if (Vector3.Distance(target.transform.position, transform.position) <= atkRange)
                 {
                     canAttack = false;
-                    StartCoroutine("AttackCooldown");
+
+                    if (target.GetComponent<Entity>())
+                    {
+                        Debug.Log("Enemy attacked for " + atkDamage);
+
+                        // check if we killed the target, if so remove it from the list of targets
+                        if(target.GetComponent<Entity>().damage(atkDamage))
+                            removeTarget(target);
+                    }
+                    Invoke("attackCooldown", atkSpeed);
                 }
             }
         }
     }
-    IEnumerator AttackCooldown()
+    protected void attackCooldown()
     {
-        yield return new WaitForSeconds(atkSpeed);
         canAttack = true;
-        StopCoroutine("AttackCooldown");
     }
 
     /// <summary>
@@ -118,5 +131,11 @@ public class Enemy : Unit
         }
 
         return closestTarget;
+    }
+
+    private void OnDestroy()
+    {
+        // clear any invokes that may be running on this enemy
+        CancelInvoke();
     }
 }
