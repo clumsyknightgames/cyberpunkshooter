@@ -409,7 +409,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 741559111}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -1372,7 +1372,7 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: ea2d618b35423f04dabd924f7d69ae85, type: 3}
+      objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 4809398280292386, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
       propertyPath: m_LocalScale.y
       value: 1
@@ -1470,6 +1470,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 65517109943508170, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
     - {fileID: 136443934355674790, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
+    - {fileID: 54034168077532698, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: ba0f4a5c2368a6341b58318166fe4484, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1806809762
@@ -1543,8 +1544,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1383542670059958, guid: ba0f4a5c2368a6341b58318166fe4484,
     type: 2}
   m_PrefabInternal: {fileID: 1681984801}
---- !u!65 &1832615295
-BoxCollider:
+--- !u!143 &1832615289
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -1553,7 +1554,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2132080782
 GameObject:

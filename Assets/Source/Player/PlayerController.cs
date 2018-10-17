@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : Unit
 {
     private float sensitivity;
     private Vector3 aimPoint;
-    private float AIM_OFFSET = 1.25f;
 
+    private const float AIM_OFFSET = 1.25f;
+    private const float GRAVITY = 250f; // make global variable across all objects in future (possibly)
     private const float USE_RANGE = 3f;
 
     private int EquippedWeapon = 0;
@@ -24,6 +26,7 @@ public class PlayerController : Unit
     private Weapon weaponController;
 
     public PlayerTemplate playerClass;
+    private CharacterController controller;
 
     private Dictionary<string, bool> handledKeys;
 
@@ -157,13 +160,14 @@ public class PlayerController : Unit
             finalMovSpeed = movSpeed + sprintModifier;
         }
 
-        float hSpeed = (Input.GetAxis("Horizontal") * finalMovSpeed) * Time.deltaTime;
-        float vSpeed = (Input.GetAxis("Vertical") * finalMovSpeed) * Time.deltaTime;
+        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        moveDir *= finalMovSpeed * Time.deltaTime;
 
-        Vector3 moveVel = transform.GetComponent<Rigidbody>().velocity;
-        moveVel.x = hSpeed;
-        moveVel.z = vSpeed;
-        transform.GetComponent<Rigidbody>().velocity = moveVel;
+        // if the player isnt grounded, apply gravity
+        if (!controller.isGrounded)
+            moveDir.y -= GRAVITY * Time.deltaTime;
+
+        controller.Move(moveDir * Time.deltaTime);
     }
 
     private void use()
@@ -187,6 +191,8 @@ public class PlayerController : Unit
         energy.curResource = energy.maxResource;
 
         defense = playerClass.baseDefense;
+
+        controller = GetComponent<CharacterController>();
     }
 
     private void EquipWeapon(int WeaponIndex = 0)
