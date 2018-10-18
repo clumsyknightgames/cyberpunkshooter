@@ -37,6 +37,7 @@ public class PlayerController : Unit
 
     public PlayerTemplate playerClass;
     private CharacterController controller;
+    private PlayerUIController uiController;
 
     private Dictionary<string, bool> handledKeys;
 
@@ -48,6 +49,11 @@ public class PlayerController : Unit
 
         weaponObject = transform.GetChild(0).gameObject;
         weaponController = weaponObject.GetComponent<Weapon>();
+
+        controller = GetComponent<CharacterController>();
+
+        uiController = GetComponent<PlayerUIController>();
+        uiController.player = this;
 
         Magazines = new Dictionary<MagazineTemplate, int>();
 
@@ -201,8 +207,6 @@ public class PlayerController : Unit
         energy.curResource = energy.maxResource;
 
         defense = playerClass.baseDefense;
-
-        controller = GetComponent<CharacterController>();
     }
 
     private void EquipWeapon(int WeaponIndex = 0)
