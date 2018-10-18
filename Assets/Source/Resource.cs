@@ -1,4 +1,14 @@
-﻿public class Resource
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : Resource.cs
+//   Description :
+//      Regen-able resource object such as health, stamina, energy
+//
+//   Created On: 17/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
+public class Resource
 {
     public string resourceName;
 

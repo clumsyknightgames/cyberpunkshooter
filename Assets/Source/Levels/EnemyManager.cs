@@ -1,4 +1,15 @@
-﻿using System.Collections;
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : EnemyManager.cs
+//   Description : [TEMP CLASS]
+//      Unused class for now, but if we switch to object pooling it wil be
+//      used
+//
+//   Created On: 17/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

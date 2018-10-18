@@ -1,4 +1,14 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : PlayerController.cs
+//   Description :
+//      Handle player input, movement and aiming
+//
+//   Created On: 17/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

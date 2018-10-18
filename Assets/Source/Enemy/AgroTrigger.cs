@@ -1,6 +1,14 @@
-﻿/*
- * Purpose: Place on the child trigger collider for the enemy, Adds or removes a player object to the list of possible targets 
-*/
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : AgroTrigger.cs
+//   Description :
+//      Place on the child trigger collider for the enemy, 
+//      Adds or removes a player object to the list of possible targets 
+//
+//   Created On: 14/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 
 public class AgroTrigger : MonoBehaviour

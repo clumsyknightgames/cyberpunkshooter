@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : Entity.cs
+//   Description :
+//      Class for all possibly destroyable objects in the game to derrive from
+//
+//   Created On: 17/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
+using UnityEngine;
 
 public class Entity : LevelObject
 {

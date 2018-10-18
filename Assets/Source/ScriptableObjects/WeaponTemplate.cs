@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿////////////////////////////////////////////////////////////////////////////
+//
+//   Project     : Cyberpunk Shooter
+//   File        : WeaponTemplate.cs
+//   Description :
+//      Class used to create new Weapon objects for the game
+//
+//   Created On: 17/10/2018
+//   Created By: Matt Ward <mailto:wardm17@gmail.com>
+////////////////////////////////////////////////////////////////////////////
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
