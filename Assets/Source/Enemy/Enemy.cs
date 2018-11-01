@@ -14,6 +14,7 @@ using UnityEngine;
 
 public class Enemy : Unit
 {
+    public bool awake; // is the enemy active
     private bool hasTarget;
     private GameObject target;
     public SphereCollider aggroSphere;
@@ -24,6 +25,7 @@ public class Enemy : Unit
     private float atkDamage;
     private float atkSpeed;
     private float atkRange;
+    private float agroRange;
 
     private const float TARGET_SEEK_SPEED = 1;
 
@@ -82,7 +84,8 @@ public class Enemy : Unit
         atkSpeed = enemyType.attackSpeed;
         atkRange = enemyType.attackRange;
 
-        aggroSphere.radius = enemyType.agroRange;
+        agroRange = enemyType.agroRange;
+        aggroSphere.radius = agroRange;
         aggroSphere.gameObject.layer = 2;
     }
 

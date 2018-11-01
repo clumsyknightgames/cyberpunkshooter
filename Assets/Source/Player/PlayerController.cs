@@ -28,16 +28,16 @@ public class PlayerController : Unit
     // scriptable object skills common methods: cast, canCast (checks if on cooldown, checks if enough energy)
 
     // Weapon variables
-
     public List<WeaponTemplate> Weapons;
     public Dictionary<MagazineTemplate, int> Magazines;
 
     private GameObject weaponObject;
     private Weapon weaponController;
 
+    public GameObject crosshair;
+
     public PlayerTemplate playerClass;
     private CharacterController controller;
-    private PlayerUIController uiController;
 
     private Dictionary<string, bool> handledKeys;
 
@@ -52,9 +52,6 @@ public class PlayerController : Unit
 
         controller = GetComponent<CharacterController>();
 
-        uiController = GetComponent<PlayerUIController>();
-        uiController.player = this;
-
         Magazines = new Dictionary<MagazineTemplate, int>();
 
         foreach (MagazineSlot pair in playerClass.magazines)
@@ -66,6 +63,8 @@ public class PlayerController : Unit
         sensitivity = PlayerPrefs.GetFloat("SENSITIVITY", 8f);
 
         EquipWeapon();
+
+        //Cursor.visible = false;
     }
 
     void Update()
@@ -164,6 +163,9 @@ public class PlayerController : Unit
 
             // Show where we're aiming with the offset included with a pink line
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
+
+            crosshair.transform.position = aimPoint;
+            crosshair.transform.rotation = Quaternion.LookRotation(hit.normal);
         }
     }
     private void movement()
