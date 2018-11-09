@@ -3,7 +3,7 @@
 //   Project     : Cyberpunk Shooter
 //   File        : EnemyTemplate.cs
 //   Description :
-//      Class used to create new enemies for the game
+//      Scriptable object used to create new enemies for the game
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>

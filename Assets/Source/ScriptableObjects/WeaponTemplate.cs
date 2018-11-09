@@ -3,7 +3,7 @@
 //   Project     : Cyberpunk Shooter
 //   File        : WeaponTemplate.cs
 //   Description :
-//      Class used to create new Weapon objects for the game
+//      Scriptable object to create new weapons in-editor
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>

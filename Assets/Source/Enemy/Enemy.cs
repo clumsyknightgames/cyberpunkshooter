@@ -65,6 +65,9 @@ public class Enemy : Unit
         }
     }
 
+    /// <summary>
+    /// setup enemy object's variables to use the data from scriptable object enemy type
+    /// </summary>
     private void initializeEnemy()
     {
         name = enemyType.enemyName;

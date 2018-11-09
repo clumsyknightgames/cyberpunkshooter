@@ -3,7 +3,7 @@
 //   Project     : Cyberpunk Shooter
 //   File        : Resource.cs
 //   Description :
-//      Regen-able resource object such as health, stamina, energy
+//      Regen-able resource class (such as health, stamina & energy)
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>
@@ -18,6 +18,7 @@ public class Resource
         get { return curResource_; }
         set
         {
+            // make sure resource is always above 0 and below the maximum allowed resource
             if (value > maxResource)
                 curResource_ = maxResource;
             else if (value >= 0)
@@ -48,7 +49,7 @@ public class Resource
     }
 
     /// <summary>
-    /// Constructor for creating Resource with full current amount
+    /// Constructor for creating Resource with curResource filled to max allowed
     /// </summary>
     /// <param name="n">Resource Name</param>
     /// <param name="m">Maximum Resource</param>
@@ -64,8 +65,9 @@ public class Resource
         regenRate = rate;
         regenAmt = amt;
     }
+
     /// <summary>
-    /// Constructor for creating Resource with set current value
+    /// Constructor for creating Resource with specified current value
     /// </summary>
     /// <param name="n">Resource Name</param>
     /// <param name="c">Current Resource amount</param>
@@ -83,13 +85,15 @@ public class Resource
         regenAmt = amt;
     }
 
+
     /// need to decide on using this to create a coroutine or leave it as is
     /// <summary>
-    /// Apply regeneration to the resource, to be called in fixed updates
+    /// Apply regeneration to the resource, to be called in fixed updates (or co-routines if decided on using those)
     /// </summary>
-    public void regenTick()
+    /// <returns>Returns true if we were able to regen, false if not</returns>
+    public bool regenTick()
     {
-        // check if resource can regen
+        // check if resource is a regen-able resource and make sure its below max allowed
         if (canRegen && curResource_ < maxResource)
         {
             // Regen only when the amount reaches a whole number
@@ -100,6 +104,11 @@ public class Resource
                 regenAmt -= amt_;
             }
             regenAmt += regenRate;
+
+            // we were able to regen this tick
+            return true;
         }
+        else
+            return false; // regen tick failed, stop regening
     }
 }

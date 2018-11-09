@@ -3,7 +3,7 @@
 //   Project     : Cyberpunk Shooter
 //   File        : Player.cs
 //   Description :
-//      Class used to create new players for the game
+//      Scriptable object used to create new player classes in-editor
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>

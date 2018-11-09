@@ -36,6 +36,9 @@ public class PlayerController : Unit
 
     public GameObject crosshair;
 
+    private GameObject laser;
+    private LineRenderer laserLine;
+
     public PlayerTemplate playerClass;
     private CharacterController controller;
 
@@ -64,7 +67,11 @@ public class PlayerController : Unit
 
         EquipWeapon();
 
-        //Cursor.visible = false;
+        laser = transform.GetChild(1).gameObject;
+        laser.transform.position = weaponObject.transform.GetChild(0).position;
+        laserLine = laser.GetComponent<LineRenderer>();
+
+        Cursor.visible = false;
     }
 
     void Update()
@@ -88,6 +95,9 @@ public class PlayerController : Unit
         }
     }
 
+    /// <summary>
+    /// Check for input events
+    /// </summary>
     private void manageInput()
     {
         if (Input.GetButton("Fire"))
@@ -131,6 +141,10 @@ public class PlayerController : Unit
 
 
     }
+
+    /// <summary>
+    /// Aim towards mouse
+    /// </summary>
     private void aimAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -164,10 +178,20 @@ public class PlayerController : Unit
             // Show where we're aiming with the offset included with a pink line
             Debug.DrawLine(weaponObject.transform.GetChild(0).transform.position, aimPoint, Color.magenta, 0);
 
+            // move the crooshair to the location the player is aiming at
             crosshair.transform.position = aimPoint;
+            // set the crosshair to the normal of what hit location
             crosshair.transform.rotation = Quaternion.LookRotation(hit.normal);
+
+            // set the location of the laser pointer
+            laserLine.SetPosition(0, weaponObject.transform.GetChild(0).position);
+            laserLine.SetPosition(1, hit.point);
         }
     }
+
+    /// <summary>
+    /// handle movement
+    /// </summary>
     private void movement()
     {
         float finalMovSpeed = movSpeed;
@@ -188,6 +212,9 @@ public class PlayerController : Unit
         controller.Move(moveDir * Time.deltaTime);
     }
 
+    /// <summary>
+    /// call use on an object in front of the player
+    /// </summary>
     private void use()
     {
         // cast a ray in front of the player, check if distance is less than or equal to useRange
@@ -195,8 +222,15 @@ public class PlayerController : Unit
         // if it is, call the interact function on the object hit by the raycast
     }
 	
+    /// <summary>
+    /// if the player dies, set the object to false to prevent nullrefrences [TODO: add actual cleaup code on player being killed or allow for respawning]
+    /// </summary>
     protected override void kill(){ gameObject.SetActive(false); }
 
+
+    /// <summary>
+    /// set the player variables with the selected class data
+    /// </summary>
     private void initializePlayerClass()
     {
         movSpeed = playerClass.movementSpeed;

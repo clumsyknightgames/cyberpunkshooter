@@ -1,20 +1,18 @@
 ﻿////////////////////////////////////////////////////////////////////////////
 //
 //   Project     : Cyberpunk Shooter
-//   File        : BaseSkill.cs
+//   File        : Skill.cs
 //   Description :
 //      Base skill class
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>
 ////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class BaseSkill : MonoBehaviour
+public class Skill : MonoBehaviour
 {
-    
 }
 public enum SkillType
 {
