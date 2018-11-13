@@ -411,6 +411,8 @@ MonoBehaviour:
   Weapons: []
   crosshair: {fileID: 0}
   playerClass: {fileID: 11400000, guid: 5c2047cac14bead49b826ec6f1365af4, type: 2}
+  healthText: {fileID: 0}
+  ammoText: {fileID: 0}
 --- !u!114 &114837184541087228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,7 +446,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: cebf7f9cd10599e46b7b967d37cd6daa, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -475,7 +477,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.024331763
+        value: 0.03531809
         inSlope: 0
         outSlope: 0
         tangentMode: 0

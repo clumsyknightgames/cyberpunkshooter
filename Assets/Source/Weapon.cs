@@ -107,6 +107,27 @@ public class Weapon : MonoBehaviour {
         return null;
     }
 
+    /// <summary>
+    /// Get the current ammo as a string
+    /// </summary>
+    /// <returns>string containing currentAmmo</returns>
+    public string getCurrentAmmoString()
+    {
+        return currentAmmo.ToString();
+    }
+
+    /// <summary>
+    /// Get the num of magazines of that type as a string
+    /// </summary>
+    /// <returns>string containing player.Magazines[loadedMag]</returns>
+    public string getLoadedMagCountString()
+    {
+        if (loadedMag != null)
+            return player.Magazines[loadedMag].ToString();
+        else
+            return "0";
+    }
+
     public bool CanReload()
     {
         if (GetFirstMagType() != null)

@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : Unit
@@ -44,6 +45,11 @@ public class PlayerController : Unit
 
     private Dictionary<string, bool> handledKeys;
 
+
+    // UI ELEMENT REFRENCES
+    public Text healthText;
+    public Text ammoText;
+
     void Start()
     {
         initializePlayerClass();
@@ -65,11 +71,15 @@ public class PlayerController : Unit
 
         sensitivity = PlayerPrefs.GetFloat("SENSITIVITY", 8f);
 
-        EquipWeapon();
+        equipWeapon();
 
         laser = transform.GetChild(1).gameObject;
         laser.transform.position = weaponObject.transform.GetChild(0).position;
         laserLine = laser.GetComponent<LineRenderer>();
+
+        // initial UI calls
+        UI_updateHealth();
+        UI_updateAmmo();
 
         Cursor.visible = false;
     }
@@ -103,6 +113,7 @@ public class PlayerController : Unit
         if (Input.GetButton("Fire"))
         {
             weaponController.Fire();
+            UI_updateAmmo();
         }
         if (Input.GetButton("CastRay"))
         {
@@ -121,7 +132,7 @@ public class PlayerController : Unit
 
         if (Input.GetButton("SwapWeapon") && !handledKeys["SwapWeapon"])
         {
-            EquipNextWeapon();
+            equipNextWeapon();
             handledKeys["SwapWeapon"] = true;
         }
         else if (!Input.GetButton("SwapWeapon"))
@@ -132,6 +143,7 @@ public class PlayerController : Unit
         if (Input.GetButton("Reload") && !handledKeys["Reload"])
         {
             weaponController.Reload();
+            UI_updateAmmo();
             handledKeys["Reload"] = true;
         }
         else if (!Input.GetButton("Reload"))
@@ -229,6 +241,19 @@ public class PlayerController : Unit
 
 
     /// <summary>
+    /// Call the entity damage function passing in recieved damage and update health
+    /// </summary>
+    /// <param name="value">the damage to apply before reduction from armor</param>
+    /// <returns>whether the player was killed or not from the call</returns>
+    public override bool damage(float value)
+    {
+        bool wasKilled = base.damage(value);
+        UI_updateHealth();
+
+        return wasKilled;
+    }
+
+    /// <summary>
     /// set the player variables with the selected class data
     /// </summary>
     private void initializePlayerClass()
@@ -245,19 +270,35 @@ public class PlayerController : Unit
         defense = playerClass.baseDefense;
     }
 
-    private void EquipWeapon(int WeaponIndex = 0)
+    private void equipWeapon(int WeaponIndex = 0)
     {
         EquippedWeapon = WeaponIndex;
         weaponController.equipWeapon(Weapons[WeaponIndex]);
     }
 
-    private void EquipNextWeapon()
+    private void equipNextWeapon()
     {
         int nextWeapon = EquippedWeapon + 1;
         if (nextWeapon >= Weapons.Count)
         {
             nextWeapon = 0;
         }
-        EquipWeapon(nextWeapon);
+        equipWeapon(nextWeapon);
+    }
+
+    /// <summary>
+    /// Update Ammo UI
+    /// </summary>
+    private void UI_updateAmmo()
+    {
+        ammoText.text = weaponController.getCurrentAmmoString() + '/' + weaponController.getLoadedMagCountString();
+    }
+
+    /// <summary>
+    /// Update Health UI
+    /// </summary>
+    private void UI_updateHealth()
+    {
+        healthText.text = health.curResource.ToString() + '/' + health.maxResource.ToString();
     }
 }
