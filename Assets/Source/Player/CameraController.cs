@@ -21,12 +21,12 @@ public class CameraController : MonoBehaviour {
     public const float offsetZ = -16;
 
     private float zoom = 512;
-    private const float zoomStep = 128;
+    private const float ZOOM_STEP = 128;
 
     private Vector3 camPos;
 	void Update ()
     {
-        float deltaZoom = Input.GetAxis("Zoom") * zoomStep * Time.deltaTime;
+        float deltaZoom = Input.GetAxis("Zoom") * ZOOM_STEP * Time.deltaTime;
         zoom += deltaZoom;
 
         // Debug.Log("Camera zoom: " + zoom.ToString());
