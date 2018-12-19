@@ -2,9 +2,11 @@
 //
 //   Project     : Cyberpunk Shooter
 //   File        : EnemyManager.cs
-//   Description : [TEMP CLASS]
-//      Unused class for now, but if we switch to object pooling it wil be
-//      used
+//   Description :
+//      Spawn enemies based on what area the player is in
+//      keep maximum number of active enemies below a limit and cache locations
+//      of enemies that get too far away from player which will then be spawned
+//      closer to the player
 //
 //   Created On: 17/10/2018
 //   Created By: Matt Ward <mailto:wardm17@gmail.com>
@@ -15,6 +17,6 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    // need to decide between using an object pool of enemies or creating them and destroying as we use them
-    // unity 2018 seems to fix the preformance drawbacks of using this?
+    // maximum amount of active enemies at one time (linked to difficulty)
+    private int maxEnemies;
 }
